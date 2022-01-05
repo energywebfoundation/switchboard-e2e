@@ -10,7 +10,7 @@ describe('login tests', () => {
     await page.goto(CONFIG.page, {waitUntil: ['load' , 'domcontentloaded' , 'networkidle0' , 'networkidle2']});
   })
 
-  test('should login to switchboard', async () => {
+  it('should successfully login and after logout navigate to welcome page', async () => {
     await page.waitForTimeout(5000);
     const btn = await page.waitForSelector('.btn-connect-metamask');
     console.log(btn);
@@ -35,4 +35,26 @@ describe('login tests', () => {
     // await page.bringToFront();
     await page.waitForTimeout(10000);
   });
+
+  it('should display snackbar when rejecting metamask', () => {
+
+  });
+
+  it('should switch network to volta', () => {
+
+  });
+
+  it('should display dialog information when switching network', () => {
+
+  });
+
+  it('should display dialog information when switching account', () => {
+
+  });
+
+  it('should navigate to dashboard page, when refreshing page after successful login', () => {
+
+  })
+
+
 });
