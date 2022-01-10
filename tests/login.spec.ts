@@ -3,37 +3,33 @@ import { CONFIG } from '../src/config';
 import { Page } from 'puppeteer';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Select } from '../src/select';
+import { MetamaskPage } from '../src/pages/metamask.page';
 
 describe('login tests', () => {
-  // let page: Page
+  let metamaskPage: MetamaskPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     // await page.setViewport({width: 1024, height: 600, hasTouch: true});
     await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
     await page.waitForTimeout(5000);
+    metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)).page);
 
   });
 
   it('should display snackbar when rejecting metamask', async () => {
-    const btn = await page.waitForSelector('.btn-connect-metamask');
-    await btn.focus();
-    await btn.click();
+    await page.click('.btn-connect-metamask');
 
-    const metamask = await getMetamaskWindow(browser);
-    await metamask.page.reload();
-    if(await metamask.page.$('[data-testid="popover-close"]')) {
-      await metamask.page.click('[data-testid="popover-close"]');
-    }
+    // const metamask = await getMetamaskWindow(browser);
+    // await metamask.page.reload();
+    await metamaskPage.closePopOver();
 
     await Metamask.reject();
     expect(await page.waitForSelector('.toast-container .toast-error')).toBeTruthy();
   });
 
   it('should successfully login and after logout navigate to welcome page', async () => {
-    const btn = await page.waitForSelector('.btn-connect-metamask');
-    await btn.focus();
-    await btn.click();
+    await page.click('.btn-connect-metamask');
 
     const metamask = await getMetamaskWindow(browser);
     const metamaskWindow = metamask.page;
