@@ -22,8 +22,8 @@ export class MetamaskPage extends BaseAbstract {
 
   async closePopOver(): Promise<void> {
     await this.bringToFrontAndReload();
-    if (await this.page.$(this.getByTestId(MetamaskSelector.PopoverClose))) {
-      await this.page.click(this.getByTestId(MetamaskSelector.PopoverClose));
+    if (await this.page.$(this.getSelector(MetamaskSelector.PopoverClose))) {
+      await this.page.click(this.getSelector(MetamaskSelector.PopoverClose));
     }
   }
 
@@ -49,6 +49,10 @@ export class MetamaskPage extends BaseAbstract {
 
     const sign = await Select.byTestData(this.page, 'request-signature__sign');
     await sign.click();
+  }
+
+  protected getSelector(attribute: string): string {
+    return `[data-testid="${attribute}"]`;
   }
 
 }

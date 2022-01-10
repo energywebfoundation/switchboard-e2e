@@ -3,15 +3,15 @@ import { BaseAbstract } from './base.abstract';
 
 export class WelcomePage extends BaseAbstract {
   async selectMetamask() {
-    await page.click(this.getByTestId(WelcomeSelector.MetamaskButton));
+    await page.click(this.getSelector(WelcomeSelector.MetamaskButton));
   }
 
   async selectAzure() {
-    await page.click(this.getByTestId(WelcomeSelector.AzureButton));
+    await page.click(this.getSelector(WelcomeSelector.AzureButton));
   }
 
   async selectWalletConnect() {
-    await page.click(this.getByTestId(WelcomeSelector.WalletConnect));
+    await page.click(this.getSelector(WelcomeSelector.WalletConnect));
   }
 
 

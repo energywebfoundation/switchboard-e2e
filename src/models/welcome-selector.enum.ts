@@ -1,5 +1,5 @@
 export enum WelcomeSelector {
-  MetamaskButton = '.btn-connect-metamask',
+  MetamaskButton = 'metamask',
   AzureButton = 'azure',
   WalletConnect = 'mobile-wallet'
 }
