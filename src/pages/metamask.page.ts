@@ -17,19 +17,19 @@ export class MetamaskPage {
     await this.dappeteer.approve();
   }
 
-  async closePopOver() {
+  async closePopOver(): Promise<void> {
     await this.bringToFrontAndReload();
     if (await this.page.$(this.getByTestId(MetamaskSelector.PopoverClose))) {
       await this.page.click(this.getByTestId(MetamaskSelector.PopoverClose));
     }
   }
 
-  async bringToFrontAndReload() {
+  async bringToFrontAndReload():Promise<void> {
     await this.page.bringToFront();
     await this.page.reload();
   }
 
-  async reject() {
+  async reject(): Promise<void> {
     await this.closePopOver();
 
     await (await this.page.waitForSelector(MetamaskSelector.CancelButton)).click();
