@@ -5,7 +5,7 @@ export class Select {
     return page.waitForSelector(`[data-testid="${attribute}"]`);
   }
 
-  static byQaData(page: Page, attribute: string) {
+  static byQaData(attribute: string) {
     return page.waitForSelector(`[data-qa-id="${attribute}"]`);
   }
 }

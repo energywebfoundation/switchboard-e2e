@@ -2,6 +2,7 @@ import { Metamask } from '../src/metamask';
 import { CONFIG } from '../src/config';
 import { Page } from 'puppeteer';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
+import { Select } from '../src/select';
 
 describe('login tests', () => {
   // let page: Page
@@ -33,7 +34,7 @@ describe('login tests', () => {
     await Metamask.sign(metamaskWindow);
 
     await page.bringToFront();
-    await page.waitForTimeout(10000);
+    expect((await Select.byQaData('Governance'))).toBeTruthy();
   });
 
   it('should display snackbar when rejecting metamask', () => {
