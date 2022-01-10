@@ -2,10 +2,12 @@ import { Page } from 'puppeteer';
 import { MetamaskSelector } from '../models/metamask-selector.enum';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
+import { BaseAbstract } from './base.abstract';
 
-export class MetamaskPage {
+export class MetamaskPage extends BaseAbstract {
 
   constructor(private dappeteer: Dappeteer) {
+    super();
   }
 
   get page(): Page {
@@ -49,7 +51,4 @@ export class MetamaskPage {
     await sign.click();
   }
 
-  private getByTestId(attribute: string): string {
-    return `[data-testid="${attribute}"]`;
-  }
 }
