@@ -1,9 +1,20 @@
 import { Page } from 'puppeteer';
 import { MetamaskSelector } from '../models/metamask-selector.enum';
+import { Dappeteer } from '@chainsafe/dappeteer';
 
 export class MetamaskPage {
 
-  constructor(private page: Page) {
+  constructor(private dappeteer: Dappeteer) {
+  }
+
+  get page(): Page {
+    return this.dappeteer.page;
+  }
+
+  async approve(): Promise<void> {
+    await this.closePopOver();
+
+    await this.dappeteer.approve();
   }
 
   async closePopOver() {

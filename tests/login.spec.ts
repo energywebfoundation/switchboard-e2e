@@ -13,7 +13,7 @@ describe('login tests', () => {
     await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
     await page.waitForTimeout(5000);
-    metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)).page);
+    metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
 
   });
 
@@ -31,10 +31,8 @@ describe('login tests', () => {
     const metamask = await getMetamaskWindow(browser);
     const metamaskWindow = metamask.page;
     await metamask.page.reload();
-    if(await metamask.page.$('[data-testid="popover-close"]')) {
-      await metamask.page.click('[data-testid="popover-close"]');
-    }
-    await metamask.approve();
+
+    await metamaskPage.approve();
 
     await Metamask.sign(metamaskWindow);
 
