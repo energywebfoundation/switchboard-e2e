@@ -1,5 +1,6 @@
 import dappeteer, { launch, setupMetamask } from '@chainsafe/dappeteer';
-import puppeteer, { Browser } from 'puppeteer';
+import puppeteer, { Browser, Page } from 'puppeteer';
+import { Select } from './select';
 
 
 export class Metamask {
@@ -31,7 +32,7 @@ export class Metamask {
     });
   }
 
-  static async getMetamaskWindow(browser): Promise<any> {
+  static async getMetamaskWindow(browser): Promise<Page> {
     Metamask.metamask = await new Promise((resolve) => {
       browser.pages().then((pages) => {
         for (const page of pages) {
@@ -48,8 +49,17 @@ export class Metamask {
     return Metamask.browser;
   }
 
-  static async sign() {
+  static async sign(metamaskWindow: Page) {
+    const popover = await Select.byTestData(metamaskWindow, 'popover-close');
+    await popover.click();
+    const button2 = await Select.byTestData(metamaskWindow, 'home__activity-tab');
+    await button2.click();
 
+    const unconfirmed = await metamaskWindow.waitForSelector('.transaction-list-item--unconfirmed');
+    await unconfirmed.click();
+
+    const sign = await Select.byTestData(metamaskWindow, 'request-signature__sign');
+    await sign.click();
   }
 
   static async bringToFront() {

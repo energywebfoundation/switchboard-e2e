@@ -4,35 +4,35 @@ import { Page } from 'puppeteer';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 
 describe('login tests', () => {
-  let page: Page
+  // let page: Page
   beforeEach(async () => {
-    page = await browser.newPage()
+    (global as any)['page'] = await browser.newPage()
     await page.goto(CONFIG.page, {waitUntil: ['load' , 'domcontentloaded' , 'networkidle0' , 'networkidle2']});
   })
 
   it('should successfully login and after logout navigate to welcome page', async () => {
     await page.waitForTimeout(5000);
     const btn = await page.waitForSelector('.btn-connect-metamask');
-    console.log(btn);
     await btn.focus();
     await btn.click();
 
     const metamask = await getMetamaskWindow(browser);
+    const metamaskWindow = metamask.page;
+    await metamask.page.reload();
+
+
+    // TODO: check how to move forward when popup will be displayed in metamask.
+    // const popover2 = await metamask.page.$('.fas.fa-times.popover-header__button');
+    //
+    // if (popover2) {
+    //   await popover2.click();
+    // }
+
     await metamask.approve();
 
-    // const popover = await metamaskWindow.waitForSelector('[data-testid="popover-close"]');
-    // await popover.click();
-    // console.log('popover-close');
-    // const button2 = await metamaskWindow.waitForSelector('[data-testid="home__activity-tab"]');
-    // await button2.click();
-    //
-    // const unconfirmed = await metamaskWindow.waitForSelector('.transaction-list-item--unconfirmed');
-    // await unconfirmed.click();
-    //
-    // const sign = await metamaskWindow.waitForSelector('[data-testid="request-signature__sign"]');
-    // await sign.click();
-    //
-    // await page.bringToFront();
+    await Metamask.sign(metamaskWindow);
+
+    await page.bringToFront();
     await page.waitForTimeout(10000);
   });
 
