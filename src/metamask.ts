@@ -1,4 +1,4 @@
-import dappeteer, { launch, setupMetamask } from '@chainsafe/dappeteer';
+import dappeteer, { getMetamaskWindow, launch, setupMetamask } from '@chainsafe/dappeteer';
 import puppeteer, { Browser, Page } from 'puppeteer';
 import { Select } from './select';
 
@@ -7,6 +7,14 @@ export class Metamask {
   static browser: Browser;
   static dappeteer;
   static metamask;
+
+  static async reject() {
+    const metamaskWindow = await getMetamaskWindow(browser);
+    await metamaskWindow.page.bringToFront();
+    await metamaskWindow.page.reload();
+
+    await (await metamaskWindow.page.waitForSelector('.permissions-connect-choose-account__bottom-buttons .button.btn-default')).click();
+  }
 
   static async setup(browser, account): Promise<dappeteer.Dappeteer> {
     Metamask.dappeteer = await setupMetamask(browser, {
