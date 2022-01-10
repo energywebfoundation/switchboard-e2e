@@ -2,59 +2,59 @@ import { Metamask } from '../src/metamask';
 import { CONFIG } from '../src/config';
 import { Page } from 'puppeteer';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
+import { Select } from '../src/select';
+import { MetamaskPage } from '../src/pages/metamask.page';
 
 describe('login tests', () => {
-  let page: Page
+  let metamaskPage: MetamaskPage;
   beforeEach(async () => {
-    page = await browser.newPage()
-    await page.goto(CONFIG.page, {waitUntil: ['load' , 'domcontentloaded' , 'networkidle0' , 'networkidle2']});
-  })
+    (global as any)['page'] = await browser.newPage();
+    // await page.setViewport({width: 1024, height: 600, hasTouch: true});
+    await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
+
+    await page.waitForTimeout(5000);
+    metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
+
+  });
+
+  it('should display snackbar when rejecting metamask', async () => {
+    await page.click('.btn-connect-metamask');
+
+    await metamaskPage.reject();
+
+    expect(await page.waitForSelector('.toast-container .toast-error')).toBeTruthy();
+  });
 
   it('should successfully login and after logout navigate to welcome page', async () => {
-    await page.waitForTimeout(5000);
-    const btn = await page.waitForSelector('.btn-connect-metamask');
-    console.log(btn);
-    await btn.focus();
-    await btn.click();
+    await page.click('.btn-connect-metamask');
 
-    const metamask = await getMetamaskWindow(browser);
-    await metamask.approve();
+    await metamaskPage.approve();
 
-    // const popover = await metamaskWindow.waitForSelector('[data-testid="popover-close"]');
-    // await popover.click();
-    // console.log('popover-close');
-    // const button2 = await metamaskWindow.waitForSelector('[data-testid="home__activity-tab"]');
-    // await button2.click();
-    //
-    // const unconfirmed = await metamaskWindow.waitForSelector('.transaction-list-item--unconfirmed');
-    // await unconfirmed.click();
-    //
-    // const sign = await metamaskWindow.waitForSelector('[data-testid="request-signature__sign"]');
-    // await sign.click();
-    //
-    // await page.bringToFront();
-    await page.waitForTimeout(10000);
+    await metamaskPage.sign();
+
+    await page.bringToFront();
+    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await page.evaluate(() => {
+      localStorage.clear();
+    });
+    // expect(await page.waitForSelector('.btn-connect-metamask')).toBeTruthy();
   });
 
-  it('should display snackbar when rejecting metamask', () => {
+  xit('should switch network to volta', () => {
 
   });
 
-  it('should switch network to volta', () => {
+  xit('should display dialog information when switching network', () => {
 
   });
 
-  it('should display dialog information when switching network', () => {
+  xit('should display dialog information when switching account', () => {
 
   });
 
-  it('should display dialog information when switching account', () => {
+  xit('should navigate to dashboard page, when refreshing page after successful login', () => {
 
   });
-
-  it('should navigate to dashboard page, when refreshing page after successful login', () => {
-
-  })
 
 
 });
