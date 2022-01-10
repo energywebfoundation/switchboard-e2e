@@ -1,3 +1,4 @@
 export enum MetamaskSelector {
-  PopoverClose = 'popover-close'
+  PopoverClose = 'popover-close',
+  CancelButton = '.permissions-connect-choose-account__bottom-buttons .button.btn-default'
 }

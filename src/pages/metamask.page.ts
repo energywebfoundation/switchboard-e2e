@@ -23,6 +23,6 @@ export class MetamaskPage {
   async reject() {
     await this.closePopOver();
 
-    await (await this.page.waitForSelector('.permissions-connect-choose-account__bottom-buttons .button.btn-default')).click();
+    await (await this.page.waitForSelector(MetamaskSelector.CancelButton)).click();
   }
 }
