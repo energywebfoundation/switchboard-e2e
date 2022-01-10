@@ -28,13 +28,9 @@ describe('login tests', () => {
   it('should successfully login and after logout navigate to welcome page', async () => {
     await page.click('.btn-connect-metamask');
 
-    const metamask = await getMetamaskWindow(browser);
-    const metamaskWindow = metamask.page;
-    await metamask.page.reload();
-
     await metamaskPage.approve();
 
-    await Metamask.sign(metamaskWindow);
+    await metamaskPage.sign();
 
     await page.bringToFront();
     expect((await Select.byQaData('Governance'))).toBeTruthy();
