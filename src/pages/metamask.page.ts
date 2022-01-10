@@ -9,6 +9,7 @@ export class MetamaskPage {
   }
 
   async closePopOver() {
+    await this.bringToFrontAndReload();
     if (await this.page.$(`[data-testid="${MetamaskSelector.PopoverClose}"]`)) {
       await this.page.click(`[data-testid="${MetamaskSelector.PopoverClose}"]`);
     }
@@ -17,5 +18,11 @@ export class MetamaskPage {
   async bringToFrontAndReload() {
     await this.page.bringToFront();
     await this.page.reload();
+  }
+
+  async reject() {
+    await this.closePopOver();
+
+    await (await this.page.waitForSelector('.permissions-connect-choose-account__bottom-buttons .button.btn-default')).click();
   }
 }

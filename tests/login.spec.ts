@@ -20,11 +20,8 @@ describe('login tests', () => {
   it('should display snackbar when rejecting metamask', async () => {
     await page.click('.btn-connect-metamask');
 
-    // const metamask = await getMetamaskWindow(browser);
-    // await metamask.page.reload();
-    await metamaskPage.closePopOver();
+    await metamaskPage.reject();
 
-    await Metamask.reject();
     expect(await page.waitForSelector('.toast-container .toast-error')).toBeTruthy();
   });
 
