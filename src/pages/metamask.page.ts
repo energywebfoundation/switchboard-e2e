@@ -2,10 +2,12 @@ import { Page } from 'puppeteer';
 import { MetamaskSelector } from '../models/metamask-selector.enum';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
+import { BaseAbstract } from './base.abstract';
 
-export class MetamaskPage {
+export class MetamaskPage extends BaseAbstract {
 
   constructor(private dappeteer: Dappeteer) {
+    super();
   }
 
   get page(): Page {
@@ -20,8 +22,8 @@ export class MetamaskPage {
 
   async closePopOver(): Promise<void> {
     await this.bringToFrontAndReload();
-    if (await this.page.$(this.getByTestId(MetamaskSelector.PopoverClose))) {
-      await this.page.click(this.getByTestId(MetamaskSelector.PopoverClose));
+    if (await this.page.$(this.getSelector(MetamaskSelector.PopoverClose))) {
+      await this.page.click(this.getSelector(MetamaskSelector.PopoverClose));
     }
   }
 
@@ -49,7 +51,8 @@ export class MetamaskPage {
     await sign.click();
   }
 
-  private getByTestId(attribute: string): string {
+  protected getSelector(attribute: string): string {
     return `[data-testid="${attribute}"]`;
   }
+
 }

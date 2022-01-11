@@ -1,12 +1,13 @@
 import { Metamask } from '../src/metamask';
 import { CONFIG } from '../src/config';
-import { Page } from 'puppeteer';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Select } from '../src/select';
 import { MetamaskPage } from '../src/pages/metamask.page';
+import { WelcomePage } from '../src/pages/welcome.page';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
+  let welcomePage: WelcomePage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     // await page.setViewport({width: 1024, height: 600, hasTouch: true});
@@ -14,11 +15,11 @@ describe('login tests', () => {
 
     await page.waitForTimeout(5000);
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
-
+    welcomePage = new WelcomePage();
   });
 
   it('should display snackbar when rejecting metamask', async () => {
-    await page.click('.btn-connect-metamask');
+    await welcomePage.selectMetamask();
 
     await metamaskPage.reject();
 
@@ -26,7 +27,7 @@ describe('login tests', () => {
   });
 
   it('should successfully login and after logout navigate to welcome page', async () => {
-    await page.click('.btn-connect-metamask');
+    await welcomePage.selectMetamask();
 
     await metamaskPage.approve();
 
