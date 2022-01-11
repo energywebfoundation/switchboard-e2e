@@ -11,7 +11,7 @@ describe('login tests', () => {
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     // await page.setViewport({width: 1024, height: 600, hasTouch: true});
-    await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
+    await page.goto(CONFIG.devPage, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
     await page.waitForTimeout(5000);
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));

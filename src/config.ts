@@ -1,3 +1,5 @@
 export const CONFIG  = {
-  page: 'http://localhost:4200'
+  localPage: 'http://localhost:4200',
+  devPage: 'https://dev-switchboard.energyweb.org/',
+  prodPage: 'https://switchboard.energyweb.org/'
 }
