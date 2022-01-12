@@ -16,8 +16,7 @@ describe('login tests', () => {
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
     welcomePage = new WelcomePage();
     dashboardPage = new DashboardPage();
-
-    await page.waitForTimeout(5000);
+    await welcomePage.waitForLoadingWelcomePage();
   });
 
   it('should display snackbar when rejecting metamask', async () => {

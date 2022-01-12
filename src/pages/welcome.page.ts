@@ -18,5 +18,7 @@ export class WelcomePage extends BaseAbstract {
     await page.click(this.getSelector(WelcomeSelector.WalletConnect));
   }
 
-
+  async waitForLoadingWelcomePage() {
+    await page.waitForSelector('.preloader-hidden', {hidden: false});
+  }
 }
