@@ -11,7 +11,6 @@ describe('login tests', () => {
   let dashboardPage: DashboardPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
-    // await page.setViewport({width: 1024, height: 600, hasTouch: true});
     await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
@@ -37,15 +36,11 @@ describe('login tests', () => {
     await metamaskPage.sign();
 
     await page.bringToFront();
-    await page.waitForTimeout(5000);
-    expect((await Select.byQaData('Governance'))).toBeTruthy();
-    expect(await dashboardPage.header.getMenu()).toBeTruthy();
-    await (await dashboardPage.header.getMenu()).click();
-    await page.waitForTimeout(5000);
-    expect(await dashboardPage.header.getLogoutButton()).toBeTruthy();
-    await (await dashboardPage.header.getLogoutButton()).click();
 
-    await page.waitForTimeout(5000);
+    expect(await dashboardPage.isVisible()).toBeTruthy()
+    await page.waitForTimeout(3000);
+    await dashboardPage.logout();
+
     expect(await welcomePage.isWelcomePage()).toBeTruthy();
   });
 
@@ -62,7 +57,7 @@ describe('login tests', () => {
   });
 
   it('should navigate to dashboard page, when refreshing page after successful login', async () => {
-    // TODO: fix this test to work solo runned. Now it works when it is run with others tests.
+    // TODO: fix this test to work solo run. Now it works when it is run with others tests.
     await welcomePage.selectMetamask();
     await metamaskPage.closePopOver();
     await metamaskPage.sign();

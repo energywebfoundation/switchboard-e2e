@@ -3,7 +3,7 @@ import { BaseAbstract } from './base.abstract';
 
 export class WelcomePage extends BaseAbstract {
   async isWelcomePage(): Promise<boolean> {
-    return Boolean(await page.$('app-welcome'));
+    return Boolean(await page.waitForSelector('app-welcome', {visible: true}));
   }
 
   async selectMetamask(): Promise<void> {

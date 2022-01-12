@@ -5,12 +5,23 @@ export class HeaderComponent extends BaseAbstract {
   private readonly ASSETS_SELECTOR = 'header-assets';
   private readonly GOVERNANCE_SELECTOR = 'header-governance';
 
+  private readonly USER_MENU_SELECTOR = 'user-menu';
+  private readonly LOGOUT_SELECTOR = 'menu-logout';
+
+  async openMenu() {
+    await page.click(this.getSelector(this.USER_MENU_SELECTOR));
+  }
+
+  async logout() {
+    await page.click(this.getSelector(this.LOGOUT_SELECTOR));
+  }
+
   async getMenu() {
-    return await page.waitForSelector(this.getSelector('user-menu'));
+    return await page.waitForSelector(this.getSelector(this.USER_MENU_SELECTOR));
   }
 
   async getLogoutButton() {
-    return await page.waitForSelector(this.getSelector('menu-logout'));
+    return await page.$(this.getSelector('menu-logout'));
   }
 
   async areNavigationButtonsVisible(): Promise<boolean> {
