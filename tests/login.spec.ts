@@ -1,22 +1,27 @@
-import { Metamask } from '../src/metamask';
 import { CONFIG } from '../src/config';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Select } from '../src/select';
 import { MetamaskPage } from '../src/pages/metamask.page';
 import { WelcomePage } from '../src/pages/welcome.page';
+import { DashboardPage } from '../src/pages/dashboard.page';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
   let welcomePage: WelcomePage;
+  let dashboardPage: DashboardPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
-    // await page.setViewport({width: 1024, height: 600, hasTouch: true});
     await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
-    await page.waitForTimeout(5000);
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
     welcomePage = new WelcomePage();
+    dashboardPage = new DashboardPage();
+    await welcomePage.waitForLoadingWelcomePage();
   });
+
+  afterEach(async() => {
+    await page.close();
+  })
 
   it('should display snackbar when rejecting metamask', async () => {
     await welcomePage.selectMetamask();
@@ -34,11 +39,12 @@ describe('login tests', () => {
     await metamaskPage.sign();
 
     await page.bringToFront();
-    expect((await Select.byQaData('Governance'))).toBeTruthy();
-    await page.evaluate(() => {
-      localStorage.clear();
-    });
-    // expect(await page.waitForSelector('.btn-connect-metamask')).toBeTruthy();
+
+    expect(await dashboardPage.isVisible()).toBeTruthy()
+    await page.waitForTimeout(3000);
+    await dashboardPage.logout();
+
+    expect(await welcomePage.isWelcomePage()).toBeTruthy();
   });
 
   xit('should switch network to volta', () => {
@@ -53,8 +59,19 @@ describe('login tests', () => {
 
   });
 
-  xit('should navigate to dashboard page, when refreshing page after successful login', () => {
+  it('should navigate to dashboard page, when refreshing page after successful login', async () => {
+    // TODO: fix this test to work solo run. Now it works when it is run with others tests.
+    await welcomePage.selectMetamask();
+    await metamaskPage.closePopOver();
+    await metamaskPage.sign();
 
+    await page.bringToFront();
+    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await page.reload();
+    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await page.evaluate(() => {
+      localStorage.clear();
+    });
   });
 
 
