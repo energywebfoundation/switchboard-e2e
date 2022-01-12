@@ -19,6 +19,10 @@ describe('login tests', () => {
     await welcomePage.waitForLoadingWelcomePage();
   });
 
+  afterEach(async() => {
+    await page.close();
+  })
+
   it('should display snackbar when rejecting metamask', async () => {
     await welcomePage.selectMetamask();
 
