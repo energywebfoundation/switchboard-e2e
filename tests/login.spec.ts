@@ -1,4 +1,3 @@
-import { Metamask } from '../src/metamask';
 import { CONFIG } from '../src/config';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Select } from '../src/select';
