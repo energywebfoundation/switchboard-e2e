@@ -3,10 +3,12 @@ import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Select } from '../src/select';
 import { MetamaskPage } from '../src/pages/metamask.page';
 import { WelcomePage } from '../src/pages/welcome.page';
+import { DashboardPage } from '../src/pages/dashboard.page';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
   let welcomePage: WelcomePage;
+  let dashboardPage: DashboardPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     // await page.setViewport({width: 1024, height: 600, hasTouch: true});
@@ -14,6 +16,8 @@ describe('login tests', () => {
 
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
     welcomePage = new WelcomePage();
+    dashboardPage = new DashboardPage();
+
     await page.waitForTimeout(5000);
   });
 
@@ -33,11 +37,16 @@ describe('login tests', () => {
     await metamaskPage.sign();
 
     await page.bringToFront();
+    await page.waitForTimeout(5000);
     expect((await Select.byQaData('Governance'))).toBeTruthy();
-    await page.evaluate(() => {
-      localStorage.clear();
-    });
-    // expect(await page.waitForSelector('.btn-connect-metamask')).toBeTruthy();
+    expect(await dashboardPage.header.getMenu()).toBeTruthy();
+    await (await dashboardPage.header.getMenu()).click();
+    await page.waitForTimeout(5000);
+    expect(await dashboardPage.header.getLogoutButton()).toBeTruthy();
+    await (await dashboardPage.header.getLogoutButton()).click();
+
+    await page.waitForTimeout(5000);
+    expect(await welcomePage.isWelcomePage()).toBeTruthy();
   });
 
   xit('should switch network to volta', () => {
@@ -52,7 +61,7 @@ describe('login tests', () => {
 
   });
 
-  it('should navigate to dashboard page, when refreshing page after successful login', async() => {
+  it('should navigate to dashboard page, when refreshing page after successful login', async () => {
     // TODO: fix this test to work solo runned. Now it works when it is run with others tests.
     await welcomePage.selectMetamask();
     await metamaskPage.closePopOver();
