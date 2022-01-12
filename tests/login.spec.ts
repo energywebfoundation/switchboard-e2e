@@ -12,9 +12,9 @@ describe('login tests', () => {
     // await page.setViewport({width: 1024, height: 600, hasTouch: true});
     await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
-    await page.waitForTimeout(5000);
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
     welcomePage = new WelcomePage();
+    await page.waitForTimeout(5000);
   });
 
   it('should display snackbar when rejecting metamask', async () => {
@@ -52,8 +52,19 @@ describe('login tests', () => {
 
   });
 
-  xit('should navigate to dashboard page, when refreshing page after successful login', () => {
+  it('should navigate to dashboard page, when refreshing page after successful login', async() => {
+    // TODO: fix this test to work solo runned. Now it works when it is run with others tests.
+    await welcomePage.selectMetamask();
+    await metamaskPage.closePopOver();
+    await metamaskPage.sign();
 
+    await page.bringToFront();
+    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await page.reload();
+    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await page.evaluate(() => {
+      localStorage.clear();
+    });
   });
 
 
