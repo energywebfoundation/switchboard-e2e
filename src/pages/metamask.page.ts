@@ -19,6 +19,11 @@ export class MetamaskPage extends BaseAbstract {
     await page.reload();
   }
 
+  async switchToVolta() {
+    await this.dappeteer.switchNetwork('Volta');
+    await page.reload();
+  }
+
   async acceptSwitch() {
     await this.dappeteer.page.bringToFront();
   }
@@ -36,7 +41,7 @@ export class MetamaskPage extends BaseAbstract {
     }
   }
 
-  async bringToFrontAndReload():Promise<void> {
+  async bringToFrontAndReload(): Promise<void> {
     await this.page.bringToFront();
     await this.page.reload();
   }
