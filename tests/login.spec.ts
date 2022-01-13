@@ -19,9 +19,9 @@ describe('login tests', () => {
     await welcomePage.waitForLoadingWelcomePage();
   });
 
-  afterEach(async() => {
+  afterEach(async () => {
     await page.close();
-  })
+  });
 
   it('should display snackbar when rejecting metamask', async () => {
     await welcomePage.selectMetamask();
@@ -40,15 +40,21 @@ describe('login tests', () => {
 
     await page.bringToFront();
 
-    expect(await dashboardPage.isVisible()).toBeTruthy()
+    expect(await dashboardPage.isVisible()).toBeTruthy();
     await page.waitForTimeout(3000);
     await dashboardPage.logout();
 
     expect(await welcomePage.isWelcomePage()).toBeTruthy();
   });
 
-  xit('should switch network to volta', () => {
+  it('should display network to volta when ethereum network is enabled', async () => {
+    await metamaskPage.switchToEthereum();
 
+    await page.bringToFront();
+
+    await welcomePage.waitForLoadingWelcomePage();
+
+    expect(await welcomePage.isWrongNetworkDisplayed()).toBeTruthy();
   });
 
   xit('should display dialog information when switching network', () => {

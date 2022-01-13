@@ -14,6 +14,15 @@ export class MetamaskPage extends BaseAbstract {
     return this.dappeteer.page;
   }
 
+  async switchToEthereum() {
+    await this.dappeteer.switchNetwork('Ethereum');
+    await page.reload();
+  }
+
+  async acceptSwitch() {
+    await this.dappeteer.page.bringToFront();
+  }
+
   async approve(): Promise<void> {
     await this.closePopOver();
 

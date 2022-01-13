@@ -21,4 +21,8 @@ export class WelcomePage extends BaseAbstract {
   async waitForLoadingWelcomePage() {
     await page.waitForSelector('.preloader-hidden', {hidden: false});
   }
+
+  async isWrongNetworkDisplayed() {
+    return await page.waitForSelector(this.getSelector(WelcomeSelector.WrongNetwork));
+  }
 }
