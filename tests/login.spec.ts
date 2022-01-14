@@ -19,9 +19,9 @@ describe('login tests', () => {
     await welcomePage.waitForLoadingWelcomePage();
   });
 
-  afterEach(async() => {
+  afterEach(async () => {
     await page.close();
-  })
+  });
 
   it('should display snackbar when rejecting metamask', async () => {
     await welcomePage.selectMetamask();
@@ -40,15 +40,11 @@ describe('login tests', () => {
 
     await page.bringToFront();
 
-    expect(await dashboardPage.isVisible()).toBeTruthy()
+    expect(await dashboardPage.isVisible()).toBeTruthy();
     await page.waitForTimeout(3000);
     await dashboardPage.logout();
 
     expect(await welcomePage.isWelcomePage()).toBeTruthy();
-  });
-
-  xit('should switch network to volta', () => {
-
   });
 
   xit('should display dialog information when switching network', () => {
@@ -74,5 +70,35 @@ describe('login tests', () => {
     });
   });
 
+  it('should display network to volta when ethereum network is enabled', async () => {
+    await metamaskPage.switchToEthereum();
 
+    await page.bringToFront();
+
+    await welcomePage.waitForLoadingWelcomePage();
+
+    expect(await welcomePage.isWrongNetworkDisplayed()).toBeTruthy();
+    await metamaskPage.switchToVolta();
+  });
+
+  it('should display popup when localstorage contains data, but user reject metamask', async() => {
+    // TODO: refactor this. This test is failing when running with the others. Works fine when
+    // set localstorage to the page
+    await page.evaluate(() => {
+      localStorage.setItem('ProviderType', 'MetaMask');
+      localStorage.setItem('PublicKey', '0230379d9ecb9d8cc7a41beff5ec8b7382db7f38df0b9d3188ffce57ac0557c755');
+    });
+    // navigate to /dashboard
+
+    await page.goto(CONFIG.page + '/dashboard', {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
+    // await metamaskPage.page.bringToFront();
+
+    // reject metamask
+    await metamaskPage.reject();
+
+    // display popup
+    await page.bringToFront();
+    expect(await page.waitForSelector('.swal-modal')).toBeTruthy();
+
+  });
 });

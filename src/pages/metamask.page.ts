@@ -14,6 +14,20 @@ export class MetamaskPage extends BaseAbstract {
     return this.dappeteer.page;
   }
 
+  async switchToEthereum() {
+    await this.dappeteer.switchNetwork('Ethereum');
+    await page.reload();
+  }
+
+  async switchToVolta() {
+    await this.dappeteer.switchNetwork('Volta');
+    await page.reload();
+  }
+
+  async acceptSwitch() {
+    await this.dappeteer.page.bringToFront();
+  }
+
   async approve(): Promise<void> {
     await this.closePopOver();
 
@@ -27,7 +41,7 @@ export class MetamaskPage extends BaseAbstract {
     }
   }
 
-  async bringToFrontAndReload():Promise<void> {
+  async bringToFrontAndReload(): Promise<void> {
     await this.page.bringToFront();
     await this.page.reload();
   }
