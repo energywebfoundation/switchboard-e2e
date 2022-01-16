@@ -24,19 +24,13 @@ describe('login tests', () => {
   });
 
   it('should display snackbar when rejecting metamask', async () => {
-    await welcomePage.selectMetamask();
-
-    await metamaskPage.reject();
+    await welcomePage.rejectMetamaskLogin();
 
     expect(await page.waitForSelector('.toast-container .toast-error')).toBeTruthy();
   });
 
   it('should successfully login and after logout navigate to welcome page', async () => {
-    await welcomePage.selectMetamask();
-
-    await metamaskPage.approve();
-
-    await metamaskPage.sign();
+    await welcomePage.loginWithMetamask();
 
     await page.bringToFront();
 
@@ -57,9 +51,7 @@ describe('login tests', () => {
 
   it('should navigate to dashboard page, when refreshing page after successful login', async () => {
     // TODO: fix this test to work solo run. Now it works when it is run with others tests.
-    await welcomePage.selectMetamask();
-    await metamaskPage.closePopOver();
-    await metamaskPage.sign();
+    await welcomePage.loginWithMetamask();
 
     await page.bringToFront();
     expect((await Select.byQaData('Governance'))).toBeTruthy();

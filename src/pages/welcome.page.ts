@@ -10,6 +10,17 @@ export class WelcomePage extends BaseAbstract {
     await page.click(this.getSelector(WelcomeSelector.MetamaskButton));
   }
 
+  async rejectMetamaskLogin() {
+    await this.selectMetamask();
+    await this.metamaskPage.reject();
+  }
+
+  async loginWithMetamask() {
+    await this.selectMetamask();
+
+    await this.metamaskPage.login();
+  }
+
   async selectAzure(): Promise<void> {
     await page.click(this.getSelector(WelcomeSelector.AzureButton));
   }

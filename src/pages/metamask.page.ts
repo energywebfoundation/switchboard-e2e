@@ -4,10 +4,9 @@ import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { BaseAbstract } from './base.abstract';
 
-export class MetamaskPage extends BaseAbstract {
+export class MetamaskPage {
 
   constructor(private dappeteer: Dappeteer) {
-    super();
   }
 
   get page(): Page {
@@ -39,6 +38,16 @@ export class MetamaskPage extends BaseAbstract {
     if (await this.page.$(this.getSelector(MetamaskSelector.PopoverClose))) {
       await this.page.click(this.getSelector(MetamaskSelector.PopoverClose));
     }
+  }
+
+  async login() {
+    await this.closePopOver();
+    await this.page.waitForTimeout(100);
+    if (await this.page.$('button.button.btn-primary')) {
+      await this.approve();
+    }
+
+    await this.sign();
   }
 
   async bringToFrontAndReload(): Promise<void> {
