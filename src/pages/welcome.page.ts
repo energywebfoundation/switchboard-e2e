@@ -6,6 +6,13 @@ export class WelcomePage extends BaseAbstract {
     return Boolean(await page.waitForSelector('app-welcome', {visible: true}));
   }
 
+  async openWithEthereum() {
+    await this.metamaskPage.switchToEthereum();
+
+    await page.bringToFront();
+    await this.waitForLoadingWelcomePage();
+  }
+
   async selectMetamask(): Promise<void> {
     await page.click(this.getSelector(WelcomeSelector.MetamaskButton));
   }

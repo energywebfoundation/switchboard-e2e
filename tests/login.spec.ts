@@ -63,18 +63,18 @@ describe('login tests', () => {
   });
 
   it('should display network to volta when ethereum network is enabled', async () => {
-    await metamaskPage.switchToEthereum();
-
-    await page.bringToFront();
-
-    await welcomePage.waitForLoadingWelcomePage();
+    await welcomePage.openWithEthereum();
 
     expect(await welcomePage.isWrongNetworkDisplayed()).toBeTruthy();
     await metamaskPage.switchToVolta();
   });
 
   it('should display popup when localstorage contains data, but user reject metamask', async() => {
-    // TODO: refactor this. This test is failing when running with the others. Works fine when
+    // TODO: refactor this.
+    await metamaskPage.disconnect();
+
+    await page.bringToFront();
+
     // set localstorage to the page
     await page.evaluate(() => {
       localStorage.setItem('ProviderType', 'MetaMask');

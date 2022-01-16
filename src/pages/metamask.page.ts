@@ -61,6 +61,21 @@ export class MetamaskPage {
     await (await this.page.waitForSelector(MetamaskSelector.CancelButton)).click();
   }
 
+  async disconnect() {
+    await this.page.bringToFront();
+    const connectedStatus = await this.page.waitForSelector(this.getSelector('account-options-menu-button'));
+    await connectedStatus.click();
+
+    const options = await this.page.waitForSelector('.account-options-menu__connected-sites');
+    await options.click();
+
+    const trashIcon = await this.page.waitForSelector('.connected-sites-list__trash');
+    await trashIcon.click();
+
+    const disconnectButton = await this.page.waitForSelector('button.button.btn-primary');
+    await disconnectButton.click();
+  }
+
   async sign() {
     const popover = await Select.byTestData(this.page, 'popover-close');
     await popover.click();
