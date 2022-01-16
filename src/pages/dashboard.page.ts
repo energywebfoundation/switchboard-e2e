@@ -10,6 +10,12 @@ export class DashboardPage extends BaseAbstract {
     return await this.dashboard.getGovernanceCard();
   }
 
+  async rejectMetamaskWhenReinitializing() {
+    await this.metamaskPage.reject();
+    await page.bringToFront();
+
+  }
+
   async logout() {
     await this.waitForLoaderDisappear();
 

@@ -61,7 +61,7 @@ export class MetamaskPage {
     await (await this.page.waitForSelector(MetamaskSelector.CancelButton)).click();
   }
 
-  async disconnect() {
+  async disconnect(): Promise<void> {
     await this.page.bringToFront();
     const connectedStatus = await this.page.waitForSelector(this.getSelector('account-options-menu-button'));
     await connectedStatus.click();
@@ -69,6 +69,10 @@ export class MetamaskPage {
     const options = await this.page.waitForSelector('.account-options-menu__connected-sites');
     await options.click();
 
+    if (!(await this.page.$('.connected-sites-list__trash'))) {
+      await this.page.reload();
+      return;
+    }
     const trashIcon = await this.page.waitForSelector('.connected-sites-list__trash');
     await trashIcon.click();
 

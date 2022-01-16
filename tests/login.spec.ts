@@ -70,27 +70,12 @@ describe('login tests', () => {
   });
 
   it('should display popup when localstorage contains data, but user reject metamask', async() => {
-    // TODO: refactor this.
-    await metamaskPage.disconnect();
-
-    await page.bringToFront();
-
-    // set localstorage to the page
-    await page.evaluate(() => {
-      localStorage.setItem('ProviderType', 'MetaMask');
-      localStorage.setItem('PublicKey', '0230379d9ecb9d8cc7a41beff5ec8b7382db7f38df0b9d3188ffce57ac0557c755');
-    });
-    // navigate to /dashboard
+    await welcomePage.accountNotConnectedToMetamask()
 
     await page.goto(CONFIG.page + '/dashboard', {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
-    // await metamaskPage.page.bringToFront();
 
-    // reject metamask
-    await metamaskPage.reject();
+    await dashboardPage.rejectMetamaskWhenReinitializing();
 
-    // display popup
-    await page.bringToFront();
     expect(await page.waitForSelector('.swal-modal')).toBeTruthy();
-
   });
 });

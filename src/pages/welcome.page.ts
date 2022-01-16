@@ -28,6 +28,18 @@ export class WelcomePage extends BaseAbstract {
     await this.metamaskPage.login();
   }
 
+  async accountNotConnectedToMetamask() {
+    await this.metamaskPage.disconnect();
+
+    await page.bringToFront();
+
+    // set localstorage to the page
+    await page.evaluate(() => {
+      localStorage.setItem('ProviderType', 'MetaMask');
+      localStorage.setItem('PublicKey', '0230379d9ecb9d8cc7a41beff5ec8b7382db7f38df0b9d3188ffce57ac0557c755');
+    });
+  }
+
   async selectAzure(): Promise<void> {
     await page.click(this.getSelector(WelcomeSelector.AzureButton));
   }
