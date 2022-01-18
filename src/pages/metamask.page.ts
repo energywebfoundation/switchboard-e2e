@@ -4,10 +4,9 @@ import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { BaseAbstract } from './base.abstract';
 
-export class MetamaskPage extends BaseAbstract {
+export class MetamaskPage {
 
   constructor(private dappeteer: Dappeteer) {
-    super();
   }
 
   get page(): Page {
@@ -41,6 +40,16 @@ export class MetamaskPage extends BaseAbstract {
     }
   }
 
+  async login() {
+    await this.closePopOver();
+    await this.page.waitForTimeout(100);
+    if (await this.page.$('button.button.btn-primary')) {
+      await this.approve();
+    }
+
+    await this.sign();
+  }
+
   async bringToFrontAndReload(): Promise<void> {
     await this.page.bringToFront();
     await this.page.reload();
@@ -50,6 +59,30 @@ export class MetamaskPage extends BaseAbstract {
     await this.closePopOver();
 
     await (await this.page.waitForSelector(MetamaskSelector.CancelButton)).click();
+  }
+
+  async disconnect(): Promise<void> {
+    try {
+      await this.closePopOver();
+      const connectedStatus = await this.page.waitForSelector(this.getSelector('account-options-menu-button'));
+      await connectedStatus.click();
+
+      const options = await this.page.waitForSelector('.account-options-menu__connected-sites');
+      await options.click();
+
+      if (!(await this.page.$('.connected-sites-list__trash'))) {
+        await this.closePopOver();
+        return;
+      }
+      const trashIcon = await this.page.waitForSelector('.connected-sites-list__trash');
+      await trashIcon.click();
+
+      const disconnectButton = await this.page.waitForSelector('button.button.btn-primary');
+      await disconnectButton.click();
+    } catch (e) {
+      console.log(e);
+    }
+
   }
 
   async sign() {
