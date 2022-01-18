@@ -13,6 +13,10 @@ export class WelcomePage extends BaseAbstract {
     await this.waitForLoadingWelcomePage();
   }
 
+  async switchToVolta() {
+    await this.metamaskPage.switchToVolta();
+  }
+
   async selectMetamask(): Promise<void> {
     await page.click(this.getSelector(WelcomeSelector.MetamaskButton));
   }
