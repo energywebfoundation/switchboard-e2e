@@ -34,7 +34,7 @@ describe('login tests', () => {
 
     await page.bringToFront();
 
-    expect(await dashboardPage.isVisible()).toBeTruthy();
+    await dashboardPage.isVisible();
     await page.waitForTimeout(3000);
     await dashboardPage.logout();
 
@@ -54,9 +54,9 @@ describe('login tests', () => {
     await welcomePage.loginWithMetamask();
 
     await page.bringToFront();
-    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await dashboardPage.isVisible();
     await page.reload();
-    expect((await Select.byQaData('Governance'))).toBeTruthy();
+    await dashboardPage.isVisible();
     await page.evaluate(() => {
       localStorage.clear();
     });
@@ -69,8 +69,8 @@ describe('login tests', () => {
     await metamaskPage.switchToVolta();
   });
 
-  it('should display popup when localstorage contains data, but user reject metamask', async() => {
-    await welcomePage.accountNotConnectedToMetamask()
+  it('should display popup when localstorage contains data, but user reject metamask', async () => {
+    await welcomePage.accountNotConnectedToMetamask();
 
     await page.goto(CONFIG.page + '/dashboard', {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
 
