@@ -1,9 +1,8 @@
-import { CONFIG } from '../src/config';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
-import { Select } from '../src/select';
 import { MetamaskPage } from '../src/pages/metamask.page';
 import { WelcomePage } from '../src/pages/welcome.page';
 import { DashboardPage } from '../src/pages/dashboard.page';
+import { navigateTo } from '../src/utils/navigateTo';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
@@ -11,7 +10,7 @@ describe('login tests', () => {
   let dashboardPage: DashboardPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
-    await page.goto(CONFIG.page, {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
+    await navigateTo();
 
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
     welcomePage = new WelcomePage();
@@ -66,13 +65,13 @@ describe('login tests', () => {
     await welcomePage.openWithEthereum();
 
     expect(await welcomePage.isWrongNetworkDisplayed()).toBeTruthy();
-    await metamaskPage.switchToVolta();
+    await welcomePage.switchToVolta();
   });
 
   it('should display popup when localstorage contains data, but user reject metamask', async () => {
     await welcomePage.accountNotConnectedToMetamask();
 
-    await page.goto(CONFIG.page + '/dashboard', {waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2']});
+    await navigateTo('/dashboard');
 
     await dashboardPage.rejectMetamaskWhenReinitializing();
 
