@@ -3,11 +3,13 @@ import { MetamaskPage } from '../src/pages/metamask.page';
 import { WelcomePage } from '../src/pages/welcome.page';
 import { DashboardPage } from '../src/pages/dashboard.page';
 import { navigateTo } from '../src/utils/navigateTo';
+import { PopupPage } from '../src/pages/popup.page';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
   let welcomePage: WelcomePage;
   let dashboardPage: DashboardPage;
+  let popupPage: PopupPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     await navigateTo();
@@ -15,6 +17,7 @@ describe('login tests', () => {
     metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
     welcomePage = new WelcomePage();
     dashboardPage = new DashboardPage();
+    popupPage = new PopupPage();
     await welcomePage.waitForLoadingWelcomePage();
   });
 
@@ -75,6 +78,6 @@ describe('login tests', () => {
 
     await dashboardPage.rejectMetamaskWhenReinitializing();
 
-    expect(await page.waitForSelector('.swal-modal')).toBeTruthy();
+    await popupPage.isDisplayed();
   });
 });
