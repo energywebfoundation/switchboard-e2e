@@ -62,22 +62,28 @@ export class MetamaskPage {
   }
 
   async disconnect(): Promise<void> {
-    await this.page.bringToFront();
-    const connectedStatus = await this.page.waitForSelector(this.getSelector('account-options-menu-button'));
-    await connectedStatus.click();
+    try {
+      await this.closePopOver();
+      const connectedStatus = await this.page.waitForSelector(this.getSelector('account-options-menu-button'));
+      await connectedStatus.click();
 
-    const options = await this.page.waitForSelector('.account-options-menu__connected-sites');
-    await options.click();
+      const options = await this.page.waitForSelector('.account-options-menu__connected-sites');
+      await options.click();
 
-    if (!(await this.page.$('.connected-sites-list__trash'))) {
-      await this.page.reload();
-      return;
+      if (!(await this.page.$('.connected-sites-list__trash'))) {
+        await this.closePopOver();
+        return;
+      }
+      const trashIcon = await this.page.waitForSelector('.connected-sites-list__trash');
+      await trashIcon.click();
+
+      const disconnectButton = await this.page.waitForSelector('button.button.btn-primary');
+      await disconnectButton.click();
     }
-    const trashIcon = await this.page.waitForSelector('.connected-sites-list__trash');
-    await trashIcon.click();
+    catch (e) {
+      console.log(e);
+    }
 
-    const disconnectButton = await this.page.waitForSelector('button.button.btn-primary');
-    await disconnectButton.click();
   }
 
   async sign() {
