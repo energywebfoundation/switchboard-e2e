@@ -79,8 +79,7 @@ export class MetamaskPage {
 
       const disconnectButton = await this.page.waitForSelector('button.button.btn-primary');
       await disconnectButton.click();
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
 
