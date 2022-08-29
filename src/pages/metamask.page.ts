@@ -2,7 +2,6 @@ import { Page } from 'puppeteer';
 import { MetamaskSelector } from '../models/metamask-selector.enum';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
-import { BaseAbstract } from './base.abstract';
 
 export class MetamaskPage {
 
@@ -86,8 +85,6 @@ export class MetamaskPage {
   }
 
   async sign() {
-    const popover = await Select.byTestData(this.page, 'popover-close');
-    await popover.click();
     const button2 = await Select.byTestData(this.page, 'home__activity-tab');
     await button2.click();
 

@@ -9,13 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@chainsafe/dappeteer": "^2.3.0",
+    "@chainsafe/dappeteer": "^3.0.0-rc.0",
     "@types/jest": "^27.4.0",
     "@types/jest-environment-puppeteer": "^4.4.1",
     "jest": "^27.4.6",
     "jest-puppeteer": "^6.0.3",
     "mkdirp": "^1.0.4",
-    "puppeteer": "^13.0.1",
+    "puppeteer": "^14.0.0",
     "ts-jest": "^27.1.2",
     "ts-node": "^8.2.0",
     "typescript": "^4.5.4"

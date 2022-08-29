@@ -25,6 +25,11 @@ describe('login tests', () => {
     await page.close();
   });
 
+  it('test', async() => {
+    await welcomePage.selectWalletConnect();
+    await page.waitForTimeout(10000);
+  });
+
   it('should display snackbar when rejecting metamask', async () => {
     await welcomePage.rejectMetamaskLogin();
 
@@ -33,7 +38,6 @@ describe('login tests', () => {
 
   it('should successfully login and after logout navigate to welcome page', async () => {
     await welcomePage.loginWithMetamask();
-
     await page.bringToFront();
 
     await dashboardPage.isVisible();
@@ -52,7 +56,6 @@ describe('login tests', () => {
   });
 
   it('should navigate to dashboard page, when refreshing page after successful login', async () => {
-    // TODO: fix this test to work solo run. Now it works when it is run with others tests.
     await welcomePage.loginWithMetamask();
 
     await page.bringToFront();

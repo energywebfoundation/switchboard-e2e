@@ -14,7 +14,7 @@ const {setupVoltaMetamask} = require("./src/utils/setup-volta-metamask");
 const DIR = path.join(os.tmpdir(), 'jest_dappeteer_global_setup');
 
 module.exports = async function () {
-  const browser = await launch(puppeteer, {...PUPPETEER_CONFIG, metamaskVersion: '10.1.1'});
+  const browser = await launch(puppeteer, {...PUPPETEER_CONFIG,  metamaskPath: './metamask/metamask-chrome-10.15.1'});
   try {
     // await setupMetamask(browser, metamaskOptions);
     global.browser = browser;

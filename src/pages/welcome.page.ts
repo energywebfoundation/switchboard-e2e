@@ -33,8 +33,6 @@ export class WelcomePage extends BaseAbstract {
   }
 
   async accountNotConnectedToMetamask() {
-    await this.metamaskPage.disconnect();
-
     await page.bringToFront();
 
     // set localstorage to the page
@@ -50,7 +48,8 @@ export class WelcomePage extends BaseAbstract {
   }
 
   async selectWalletConnect(): Promise<void> {
-    await page.click(this.getSelector(WelcomeSelector.WalletConnect));
+    const walletConnect = await page.waitForSelector(this.getSelector(WelcomeSelector.WalletConnect));
+    await walletConnect.click();
   }
 
   async waitForLoadingWelcomePage() {
