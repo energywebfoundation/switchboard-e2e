@@ -1,10 +1,8 @@
 name: Deploy to bucket
 
 on:
-  push:
-    branches: ['develop']
   repository_dispatch:
-    branches: ['test', 'develop']
+    branches: ['develop']
 jobs:
   ping-pong:
     runs-on: ubuntu-latest
