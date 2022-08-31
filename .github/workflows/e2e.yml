@@ -6,7 +6,7 @@ on:
   repository_dispatch:
     branches: ['develop']
 jobs:
-  ping-pong:
+  ping-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Event Information
@@ -15,16 +15,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
-        uses: browserstack/github-actions/setup-env@master
-        with:
-          username: ${{ secrets.BROWSERSTACK_USERNAME }}
-          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      - name: 'BrowserStack Local Tunnel Setup'  # Invokes the setup-local action
-        uses: browserstack/github-actions/setup-local@master
-        with:
-          local-testing: start
-          local-identifier: random
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '16.10.0'
@@ -32,17 +22,8 @@ jobs:
       - name: 'Checkout the repository'
         uses: actions/checkout@v2
 
-      - name: 'Building web application to be tested'
+      - name: 'Install dependencies'
         run: npm install
 
-      - name: 'Running application under test'
-        run: ./node_modules/.bin/http-server -p 8099 &
-
-      - name: 'Running test on BrowserStack'  # Invokes the actual test script that would run on BrowserStack browsers
-        run: npm run test  # See sample test script above
-
-      - name: 'BrowserStackLocal Stop'  # Terminating the BrowserStackLocal tunnel connection
-        uses: browserstack/github-actions/setup-local@master
-        with:
-          local-testing: stop
-
+      - name: 'Running tests'
+        run: xvfb-run --auto-servernum npm run test
