@@ -1,4 +1,4 @@
-name: Deploy to bucket
+name: Run e2e tests
 
 on:
   repository_dispatch:
@@ -17,10 +17,6 @@ jobs:
         with:
           node-version: '16.10.0'
           registry-url: https://registry.npmjs.org/
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
       - name: Install npm packages
         run: |
           npm install
