@@ -12,10 +12,20 @@ jobs:
       - name: Event Information
         run: |
           echo "Event '${{ github.event.action }}' received from '${{ github.event.client_payload.repository }}'"
-#      - name: PONG - Dispatch response to received PING
-#        if: github.event.action == 'ping'
-#        run: |
-#          curl -X POST https://api.github.com/repos/marcnuri-demo/actions-remote-dispatch-a/dispatches \
-#          -H 'Accept: application/vnd.github.everest-preview+json' \
-#          -u ${{ secrets.ACCESS_TOKEN }} \
-#          --data '{"event_type": "pong", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2-beta
+        with:
+          node-version: '16.10.0'
+          registry-url: https://registry.npmjs.org/
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+      - name: Install npm packages
+        run: |
+          npm install
+      - name: Run tests
+        run: npm run test
+
