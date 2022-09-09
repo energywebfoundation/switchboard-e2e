@@ -1,5 +1,9 @@
 import { MetamaskPage } from './metamask.page';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
+import { CONFIG } from '../config';
+import { LoaderSelectorEnum } from '../models/loader-selector.enum';
+import { MetamaskSelector } from '../models/metamask-selector.enum';
+import { Selector } from '../utils/selector';
 
 export abstract class BaseAbstract {
   metamaskPage: MetamaskPage;
@@ -9,11 +13,23 @@ export abstract class BaseAbstract {
   }
 
   public async waitForLoaderDisappear() {
-    await page.waitForSelector(this.getSelector('loading'), { hidden: true });
+    await page.waitForSelector(Selector.byQaId(LoaderSelectorEnum.Loader), { hidden: true });
   }
 
-  protected getSelector(attribute: string): string {
-    return `[data-qa-id="${attribute}"]`;
+  public async reinitializeUser() {
+    await this.fillLocalstorageWithDataForReinitialization();
+
+    if(await page.$(Selector.byQaId(LoaderSelectorEnum.Loader))) {
+      await this.metamaskPage.sign();
+    }
+  }
+
+  async fillLocalstorageWithDataForReinitialization() {
+    await page.evaluate(() => {
+      localStorage.setItem('ProviderType', 'MetaMask');
+      localStorage.setItem('isEthSigner', 'true');
+      localStorage.setItem('PublicKey', CONFIG.publicKey);
+    });
   }
 
   private async initMetamask() {

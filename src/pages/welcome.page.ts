@@ -1,6 +1,7 @@
 import { WelcomeSelector } from '../models/welcome-selector.enum';
 import { BaseAbstract } from './base.abstract';
 import { CONFIG } from '../config';
+import { Selector } from '../utils/selector';
 
 export class WelcomePage extends BaseAbstract {
   async isWelcomePage(): Promise<boolean> {
@@ -21,7 +22,7 @@ export class WelcomePage extends BaseAbstract {
   }
 
   async selectMetamask(): Promise<void> {
-    await page.click(this.getSelector(WelcomeSelector.MetamaskButton));
+    await page.click(Selector.byQaId(WelcomeSelector.MetamaskButton));
   }
 
   async rejectMetamaskLogin() {
@@ -42,21 +43,13 @@ export class WelcomePage extends BaseAbstract {
     await this.fillLocalstorageWithDataForReinitialization();
   }
 
-  async fillLocalstorageWithDataForReinitialization() {
-    await page.evaluate(() => {
-      localStorage.setItem('ProviderType', 'MetaMask');
-      localStorage.setItem('isEthSigner', 'true');
-      localStorage.setItem('PublicKey', CONFIG.publicKey);
-    });
-  }
-
   async selectAzure(): Promise<void> {
-    await page.click(this.getSelector(WelcomeSelector.AzureButton));
+    await page.click(Selector.byQaId(WelcomeSelector.AzureButton));
   }
 
   async selectWalletConnect(): Promise<void> {
     const walletConnect = await page.waitForSelector(
-      this.getSelector(WelcomeSelector.WalletConnect)
+      Selector.byQaId(WelcomeSelector.WalletConnect)
     );
     await walletConnect.click();
   }
@@ -67,7 +60,7 @@ export class WelcomePage extends BaseAbstract {
 
   async isWrongNetworkDisplayed() {
     return await page.waitForSelector(
-      this.getSelector(WelcomeSelector.WrongNetwork)
+      Selector.byQaId(WelcomeSelector.WrongNetwork)
     );
   }
 }

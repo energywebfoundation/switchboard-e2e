@@ -1,5 +1,6 @@
 import { BaseAbstract } from '../base.abstract';
 import { ElementHandle } from 'puppeteer';
+import { Selector } from '../../utils/selector';
 
 export class DashboardComponent extends BaseAbstract {
   private readonly ENROLMENT_SELECTOR = 'Enrolments';
@@ -7,16 +8,16 @@ export class DashboardComponent extends BaseAbstract {
   private readonly GOVERNANCE_SELECTOR = 'Governance';
 
   async getAssetsCard(): Promise<void> {
-    await page.$(this.getSelector(this.ASSETS_SELECTOR));
+    await page.$(Selector.byQaId(this.ASSETS_SELECTOR));
   }
 
   async getGovernanceCard(): Promise<ElementHandle<Element>> {
     return await page.waitForSelector(
-      this.getSelector(this.GOVERNANCE_SELECTOR)
+      Selector.byQaId(this.GOVERNANCE_SELECTOR)
     );
   }
 
   async getEnrolmentsCard(): Promise<void> {
-    await page.$(this.getSelector(this.ENROLMENT_SELECTOR));
+    await page.$(Selector.byQaId(this.ENROLMENT_SELECTOR));
   }
 }

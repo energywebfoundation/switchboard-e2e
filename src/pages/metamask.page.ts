@@ -2,6 +2,7 @@ import { Page } from 'puppeteer';
 import { MetamaskSelector } from '../models/metamask-selector.enum';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
+import { Selector } from '../utils/selector';
 
 export class MetamaskPage {
   constructor(private dappeteer: Dappeteer) {}
@@ -32,8 +33,8 @@ export class MetamaskPage {
 
   async closePopOver(): Promise<void> {
     await this.bringToFrontAndReload();
-    if (await this.page.$(this.getSelector(MetamaskSelector.PopoverClose))) {
-      await this.page.click(this.getSelector(MetamaskSelector.PopoverClose));
+    if (await this.page.$(Selector.byQaId(MetamaskSelector.PopoverClose))) {
+      await this.page.click(Selector.byQaId(MetamaskSelector.PopoverClose));
     }
   }
 
@@ -64,7 +65,7 @@ export class MetamaskPage {
     try {
       await this.closePopOver();
       const connectedStatus = await this.page.waitForSelector(
-        this.getSelector('account-options-menu-button')
+        Selector.byQaId('account-options-menu-button')
       );
       await connectedStatus.click();
 
@@ -102,9 +103,5 @@ export class MetamaskPage {
 
     const sign = await Select.byTestData(this.page, 'request-signature__sign');
     await sign.click();
-  }
-
-  protected getSelector(attribute: string): string {
-    return `[data-testid="${attribute}"]`;
   }
 }
