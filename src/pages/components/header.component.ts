@@ -17,7 +17,9 @@ export class HeaderComponent extends BaseAbstract {
   }
 
   async getMenu() {
-    return await page.waitForSelector(this.getSelector(this.USER_MENU_SELECTOR));
+    return await page.waitForSelector(
+      this.getSelector(this.USER_MENU_SELECTOR)
+    );
   }
 
   async getLogoutButton() {

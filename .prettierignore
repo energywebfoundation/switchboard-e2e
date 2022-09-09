@@ -1,0 +1,7 @@
+metamask/
+node_modules
+*.d.ts
+*.md
+.eslintrc.js
+eslint_report.json
+package-lock.json

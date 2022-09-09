@@ -6,7 +6,6 @@ export class DashboardPage extends BaseAbstract {
   header: HeaderComponent = new HeaderComponent();
   dashboard: DashboardComponent = new DashboardComponent();
 
-
   async isVisible() {
     expect(await this.dashboard.getGovernanceCard()).toBeTruthy();
   }
@@ -14,7 +13,6 @@ export class DashboardPage extends BaseAbstract {
   async rejectMetamaskWhenReinitializing() {
     await this.metamaskPage.reject();
     await page.bringToFront();
-
   }
 
   async logout() {

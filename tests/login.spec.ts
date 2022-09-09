@@ -14,7 +14,7 @@ describe('login tests', () => {
     (global as any)['page'] = await browser.newPage();
     await navigateTo();
 
-    metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
+    metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
     welcomePage = new WelcomePage();
     dashboardPage = new DashboardPage();
     popupPage = new PopupPage();
@@ -25,7 +25,7 @@ describe('login tests', () => {
     await page.close();
   });
 
-  it('test', async() => {
+  it('test', async () => {
     await welcomePage.selectWalletConnect();
     await page.waitForTimeout(10000);
   });
@@ -33,7 +33,9 @@ describe('login tests', () => {
   it('should display snackbar when rejecting metamask', async () => {
     await welcomePage.rejectMetamaskLogin();
 
-    expect(await page.waitForSelector('.toast-container .toast-error')).toBeTruthy();
+    expect(
+      await page.waitForSelector('.toast-container .toast-error')
+    ).toBeTruthy();
   });
 
   it('should successfully login and after logout navigate to welcome page', async () => {
@@ -47,13 +49,9 @@ describe('login tests', () => {
     expect(await welcomePage.isWelcomePage()).toBeTruthy();
   });
 
-  xit('should display dialog information when switching network', () => {
+  xit('should display dialog information when switching network', () => {});
 
-  });
-
-  xit('should display dialog information when switching account', () => {
-
-  });
+  xit('should display dialog information when switching account', () => {});
 
   it('should navigate to dashboard page, when refreshing page after successful login', async () => {
     await welcomePage.loginWithMetamask();

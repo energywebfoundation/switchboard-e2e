@@ -9,7 +9,7 @@ export abstract class BaseAbstract {
   }
 
   public async waitForLoaderDisappear() {
-    await page.waitForSelector(this.getSelector('loading'), {hidden: true});
+    await page.waitForSelector(this.getSelector('loading'), { hidden: true });
   }
 
   protected getSelector(attribute: string): string {
@@ -17,6 +17,6 @@ export abstract class BaseAbstract {
   }
 
   private async initMetamask() {
-    this.metamaskPage = new MetamaskPage((await getMetamaskWindow(browser)));
+    this.metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
   }
 }

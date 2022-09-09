@@ -4,7 +4,9 @@ import { CONFIG } from '../config';
 
 export class WelcomePage extends BaseAbstract {
   async isWelcomePage(): Promise<boolean> {
-    return Boolean(await page.waitForSelector('app-welcome', {visible: true}));
+    return Boolean(
+      await page.waitForSelector('app-welcome', { visible: true })
+    );
   }
 
   async openWithEthereum() {
@@ -53,15 +55,19 @@ export class WelcomePage extends BaseAbstract {
   }
 
   async selectWalletConnect(): Promise<void> {
-    const walletConnect = await page.waitForSelector(this.getSelector(WelcomeSelector.WalletConnect));
+    const walletConnect = await page.waitForSelector(
+      this.getSelector(WelcomeSelector.WalletConnect)
+    );
     await walletConnect.click();
   }
 
   async waitForLoadingWelcomePage() {
-    await page.waitForSelector('.preloader-hidden', {hidden: false});
+    await page.waitForSelector('.preloader-hidden', { hidden: false });
   }
 
   async isWrongNetworkDisplayed() {
-    return await page.waitForSelector(this.getSelector(WelcomeSelector.WrongNetwork));
+    return await page.waitForSelector(
+      this.getSelector(WelcomeSelector.WrongNetwork)
+    );
   }
 }

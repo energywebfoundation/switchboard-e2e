@@ -4,9 +4,7 @@ import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 
 export class MetamaskPage {
-
-  constructor(private dappeteer: Dappeteer) {
-  }
+  constructor(private dappeteer: Dappeteer) {}
 
   get page(): Page {
     return this.dappeteer.page;
@@ -57,38 +55,49 @@ export class MetamaskPage {
   async reject(): Promise<void> {
     await this.closePopOver();
 
-    await (await this.page.waitForSelector(MetamaskSelector.CancelButton)).click();
+    await (
+      await this.page.waitForSelector(MetamaskSelector.CancelButton)
+    ).click();
   }
 
   async disconnect(): Promise<void> {
     try {
       await this.closePopOver();
-      const connectedStatus = await this.page.waitForSelector(this.getSelector('account-options-menu-button'));
+      const connectedStatus = await this.page.waitForSelector(
+        this.getSelector('account-options-menu-button')
+      );
       await connectedStatus.click();
 
-      const options = await this.page.waitForSelector('.account-options-menu__connected-sites');
+      const options = await this.page.waitForSelector(
+        '.account-options-menu__connected-sites'
+      );
       await options.click();
 
       if (!(await this.page.$('.connected-sites-list__trash'))) {
         await this.closePopOver();
         return;
       }
-      const trashIcon = await this.page.waitForSelector('.connected-sites-list__trash');
+      const trashIcon = await this.page.waitForSelector(
+        '.connected-sites-list__trash'
+      );
       await trashIcon.click();
 
-      const disconnectButton = await this.page.waitForSelector('button.button.btn-primary');
+      const disconnectButton = await this.page.waitForSelector(
+        'button.button.btn-primary'
+      );
       await disconnectButton.click();
     } catch (e) {
       console.log(e);
     }
-
   }
 
   async sign() {
     const button2 = await Select.byTestData(this.page, 'home__activity-tab');
     await button2.click();
 
-    const unconfirmed = await this.page.waitForSelector('.transaction-list-item--unconfirmed');
+    const unconfirmed = await this.page.waitForSelector(
+      '.transaction-list-item--unconfirmed'
+    );
     await unconfirmed.click();
 
     const sign = await Select.byTestData(this.page, 'request-signature__sign');
@@ -98,5 +107,4 @@ export class MetamaskPage {
   protected getSelector(attribute: string): string {
     return `[data-testid="${attribute}"]`;
   }
-
 }

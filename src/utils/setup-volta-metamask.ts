@@ -20,6 +20,4 @@ export const setupVoltaMetamask = async () => {
     await clickOnButton(metamask.page, 'Save');
     await metamask.page.waitForTimeout(1000);
   }
-
-
 };

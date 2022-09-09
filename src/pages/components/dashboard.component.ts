@@ -11,7 +11,9 @@ export class DashboardComponent extends BaseAbstract {
   }
 
   async getGovernanceCard(): Promise<ElementHandle<Element>> {
-    return await page.waitForSelector(this.getSelector(this.GOVERNANCE_SELECTOR));
+    return await page.waitForSelector(
+      this.getSelector(this.GOVERNANCE_SELECTOR)
+    );
   }
 
   async getEnrolmentsCard(): Promise<void> {
