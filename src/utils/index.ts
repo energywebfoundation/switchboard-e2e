@@ -1,2 +1,2 @@
-export * from './navigateTo';
+export * from './router';
 export * from './setup-volta-metamask';

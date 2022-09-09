@@ -2,7 +2,7 @@ import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { MetamaskPage } from '../src/pages/metamask.page';
 import { WelcomePage } from '../src/pages/welcome.page';
 import { DashboardPage } from '../src/pages/dashboard.page';
-import { navigateTo } from '../src/utils/navigateTo';
+import { Router } from '../src/utils/';
 import { PopupPage } from '../src/pages/popup.page';
 
 describe('login tests', () => {
@@ -12,7 +12,8 @@ describe('login tests', () => {
   let popupPage: PopupPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
-    await navigateTo();
+    await Router.navigateTo();
+
 
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
     welcomePage = new WelcomePage();
@@ -75,7 +76,7 @@ describe('login tests', () => {
   it('should display popup when localstorage contains data, but user reject metamask', async () => {
     await welcomePage.accountNotConnectedToMetamask();
 
-    await navigateTo('/dashboard');
+    await Router.navigateTo('/dashboard');
 
     await dashboardPage.rejectMetamaskWhenReinitializing();
 
