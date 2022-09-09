@@ -1,5 +1,5 @@
 import { Page } from 'puppeteer';
-import { MetamaskSelector } from '../models/metamask-selector.enum';
+import { MetamaskSelector } from '@selectors';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { Selector } from '../utils/selector';

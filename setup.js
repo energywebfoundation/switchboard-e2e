@@ -4,7 +4,7 @@ const { writeFile } = require('fs').promises;
 const os = require('os');
 const path = require('path');
 
-const { launch, setupMetamask } = require('@chainsafe/dappeteer');
+const { launch } = require('@chainsafe/dappeteer');
 const mkdirp = require('mkdirp');
 const puppeteer = require('puppeteer');
 

@@ -1,8 +1,7 @@
 import { MetamaskPage } from './metamask.page';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { CONFIG } from '../config';
-import { LoaderSelectorEnum } from '../models/loader-selector.enum';
-import { MetamaskSelector } from '../models/metamask-selector.enum';
+import { LoaderSelectorEnum } from '@selectors';
 import { Selector } from '../utils/selector';
 
 export abstract class BaseAbstract {

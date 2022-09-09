@@ -1,6 +1,5 @@
-import { WelcomeSelector } from '../models/welcome-selector.enum';
+import { WelcomeSelector } from '@selectors';
 import { BaseAbstract } from './base.abstract';
-import { CONFIG } from '../config';
 import { Selector } from '../utils/selector';
 
 export class WelcomePage extends BaseAbstract {
