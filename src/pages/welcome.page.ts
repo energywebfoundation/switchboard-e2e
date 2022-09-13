@@ -1,6 +1,6 @@
-import { WelcomeSelector } from '@selectors';
 import { BaseAbstract } from './base.abstract';
 import { Selector } from '../utils/selector';
+import { WelcomeSelector } from '../models';
 
 export class WelcomePage extends BaseAbstract {
   async isWelcomePage(): Promise<boolean> {
@@ -13,7 +13,7 @@ export class WelcomePage extends BaseAbstract {
     await this.metamaskPage.switchToEthereum();
 
     await page.bringToFront();
-    await this.waitForLoadingWelcomePage();
+    await this.waitForPreloaderDisappear();
   }
 
   async switchToVolta() {
@@ -39,7 +39,7 @@ export class WelcomePage extends BaseAbstract {
     await page.bringToFront();
 
     // set localstorage to the page
-    await this.fillLocalstorageWithDataForReinitialization();
+    await this.prepareForReinitialization();
   }
 
   async selectAzure(): Promise<void> {
@@ -51,10 +51,6 @@ export class WelcomePage extends BaseAbstract {
       Selector.byQaId(WelcomeSelector.WalletConnect)
     );
     await walletConnect.click();
-  }
-
-  async waitForLoadingWelcomePage() {
-    await page.waitForSelector('.preloader-hidden', { hidden: false });
   }
 
   async isWrongNetworkDisplayed() {

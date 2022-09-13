@@ -4,6 +4,7 @@ import { WelcomePage } from '../src/pages/welcome.page';
 import { DashboardPage } from '../src/pages/dashboard.page';
 import { Router } from '../src/utils/';
 import { PopupPage } from '../src/pages/popup.page';
+import { RouterPathEnum } from '../src/models/router-path.enum';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
@@ -19,7 +20,7 @@ describe('login tests', () => {
     welcomePage = new WelcomePage();
     dashboardPage = new DashboardPage();
     popupPage = new PopupPage();
-    await welcomePage.waitForLoadingWelcomePage();
+    await welcomePage.waitForPreloaderDisappear();
   });
 
   afterEach(async () => {
@@ -76,7 +77,7 @@ describe('login tests', () => {
   it('should display popup when localstorage contains data, but user reject metamask', async () => {
     await welcomePage.accountNotConnectedToMetamask();
 
-    await Router.navigateTo('/dashboard');
+    await Router.navigateTo(RouterPathEnum.Dashboard);
 
     await dashboardPage.rejectMetamaskWhenReinitializing();
 

@@ -1,8 +1,8 @@
 import { Page } from 'puppeteer';
-import { MetamaskSelector } from '@selectors';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { Selector } from '../utils/selector';
+import { MetamaskSelector } from '../models';
 
 export class MetamaskPage {
   constructor(private dappeteer: Dappeteer) {}
@@ -26,8 +26,8 @@ export class MetamaskPage {
   }
 
   async approve(): Promise<void> {
-    await this.closePopOver();
-
+    // await this.closePopOver();
+    await this.page.bringToFront();
     await this.dappeteer.approve();
   }
 

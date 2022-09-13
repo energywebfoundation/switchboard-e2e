@@ -8,6 +8,7 @@ export class HeaderComponent extends BaseAbstract {
 
   private readonly USER_MENU_SELECTOR = 'user-menu';
   private readonly LOGOUT_SELECTOR = 'menu-logout';
+  private readonly DID_BOOK_SELECTOR = 'menu-did-book'
 
   async openMenu() {
     await page.click(Selector.byQaId(this.USER_MENU_SELECTOR));
@@ -21,6 +22,16 @@ export class HeaderComponent extends BaseAbstract {
     return await page.waitForSelector(
       Selector.byQaId(this.USER_MENU_SELECTOR)
     );
+  }
+
+  async openDIDBook() {
+    await this.waitForLoaderDisappear();
+
+    await (await this.getMenu()).click();
+    await page.waitForTimeout(1000);
+    await page.click(Selector.byQaId(this.DID_BOOK_SELECTOR));
+    await page.waitForTimeout(100);
+    expect(await page.$('app-did-book-form')).toBeTruthy();
   }
 
   async getLogoutButton() {
