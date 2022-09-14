@@ -13,7 +13,7 @@ describe('DID Book tests', () => {
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
- login = await new Login(metamaskPage);
+    login = await new Login(metamaskPage);
     await login.reinitializeIfNeeded();
 
     dashboardPage = new DashboardPage();
