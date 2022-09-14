@@ -4,14 +4,12 @@ import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Login } from '../../src/utils';
 import { DidBookPage } from '../../src/pages/did-book.page';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
-import { LoaderPage } from '../../src/pages/loader.page';
 
 describe('DID Book tests', () => {
   let metamaskPage: MetamaskPage;
   let dashboardPage: DashboardPage;
   let didBookPage: DidBookPage;
   let  login: Login;
-  const loaderPage: LoaderPage = new LoaderPage();
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
