@@ -39,7 +39,6 @@ export class WelcomePage extends BaseAbstract {
     await page.bringToFront();
 
     // set localstorage to the page
-    await this.prepareForReinitialization();
   }
 
   async selectAzure(): Promise<void> {

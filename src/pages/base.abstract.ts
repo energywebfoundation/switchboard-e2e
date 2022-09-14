@@ -30,10 +30,6 @@ export abstract class BaseAbstract {
     ).click();
   }
 
-  async prepareForReinitialization() {
-    await new Login().prepareForReinitialization();
-  }
-
   private async initMetamask() {
     this.metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
   }

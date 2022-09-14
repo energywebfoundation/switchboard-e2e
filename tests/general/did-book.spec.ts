@@ -1,20 +1,22 @@
-import { MetamaskPage } from '../src/pages/metamask.page';
-import { DashboardPage } from '../src/pages/dashboard.page';
+import { MetamaskPage } from '../../src/pages/metamask.page';
+import { DashboardPage } from '../../src/pages/dashboard.page';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
-import { Login, Router } from '../src/utils';
-import { DidBookPage } from '../src/pages/did-book.page';
-import { generateRandomDid } from '../src/utils/generate-random-did';
+import { Login } from '../../src/utils';
+import { DidBookPage } from '../../src/pages/did-book.page';
+import { generateRandomDid } from '../../src/utils/generate-random-did';
+import { LoaderPage } from '../../src/pages/loader.page';
 
 describe('DID Book tests', () => {
   let metamaskPage: MetamaskPage;
   let dashboardPage: DashboardPage;
   let didBookPage: DidBookPage;
+  let  login: Login;
+  const loaderPage: LoaderPage = new LoaderPage();
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
-
-    await Router.navigateTo();
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
-    await new Login().reinitialize();
+ login = await new Login(metamaskPage);
+    await login.reinitializeIfNeeded();
 
     dashboardPage = new DashboardPage();
     await dashboardPage.waitForPreloaderDisappear();
@@ -23,13 +25,11 @@ describe('DID Book tests', () => {
   });
 
   afterEach(async () => {
+    await login.clear();
     await page.close();
   });
 
   it('should open DID Book, add new record and find it on the list and remove', async () => {
-    await metamaskPage.approve();
-    await metamaskPage.sign();
-    await page.bringToFront();
     await dashboardPage.header.openDIDBook();
 
     await didBookPage.waitForLoad();

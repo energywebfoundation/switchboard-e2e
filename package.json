@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "prettier": "npx prettier --check ."
+    "test": "npm run test:login npm run test:without-login",
+    "prettier": "npx prettier --check .",
+    "test:login" : "jest --config jest.login.config.js",
+    "test:without-login": "jest --config jest.config.js"
   },
   "author": "",
   "license": "ISC",

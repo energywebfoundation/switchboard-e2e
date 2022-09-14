@@ -1,10 +1,10 @@
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
-import { MetamaskPage } from '../src/pages/metamask.page';
-import { WelcomePage } from '../src/pages/welcome.page';
-import { DashboardPage } from '../src/pages/dashboard.page';
-import { Router } from '../src/utils/';
-import { PopupPage } from '../src/pages/popup.page';
-import { RouterPathEnum } from '../src/models/router-path.enum';
+import { MetamaskPage } from '../../src/pages/metamask.page';
+import { WelcomePage } from '../../src/pages/welcome.page';
+import { DashboardPage } from '../../src/pages/dashboard.page';
+import { Login, Router } from '../../src/utils/';
+import { PopupPage } from '../../src/pages/popup.page';
+import { RouterPathEnum } from '../../src/models/router-path.enum';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
@@ -13,10 +13,12 @@ describe('login tests', () => {
   let popupPage: PopupPage;
   beforeEach(async () => {
     (global as any)['page'] = await browser.newPage();
-    await Router.navigateTo();
-
-
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
+
+    await Router.navigateTo();
+    await new Login(metamaskPage).clear();
+
+
     welcomePage = new WelcomePage();
     dashboardPage = new DashboardPage();
     popupPage = new PopupPage();
@@ -25,11 +27,6 @@ describe('login tests', () => {
 
   afterEach(async () => {
     await page.close();
-  });
-
-  it('test', async () => {
-    await welcomePage.selectWalletConnect();
-    await page.waitForTimeout(10000);
   });
 
   it('should display snackbar when rejecting metamask', async () => {
@@ -74,7 +71,7 @@ describe('login tests', () => {
     await welcomePage.switchToVolta();
   });
 
-  it('should display popup when localstorage contains data, but user reject metamask', async () => {
+  xit('should display popup when localstorage contains data, but user reject metamask', async () => {
     await welcomePage.accountNotConnectedToMetamask();
 
     await Router.navigateTo(RouterPathEnum.Dashboard);

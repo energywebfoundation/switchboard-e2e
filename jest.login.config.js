@@ -1,6 +1,6 @@
 module.exports = {
   preset: '@chainsafe/dappeteer',
-  testMatch: ['**/general/**/?(*.)+(spec|test).[t]s'],
+  testMatch: ['**/login.spec.ts'],
   testPathIgnorePatterns: ['/node_modules/', 'dist'], //
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   transform: {
