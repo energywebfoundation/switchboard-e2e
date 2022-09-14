@@ -39,8 +39,6 @@ export class Login {
       );
     });
 
-    console.log('hasData', hasData);
-
     if (!hasData) {
       await this.prepareForReinitialization();
       await Router.navigateTo(route);
