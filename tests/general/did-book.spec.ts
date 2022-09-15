@@ -10,7 +10,8 @@ describe('DID Book tests', () => {
   let dashboardPage: DashboardPage;
   let didBookPage: DidBookPage;
   let  login: Login;
-  beforeEach(async () => {
+
+  beforeAll(async () => {
     (global as any)['page'] = await browser.newPage();
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
     login = await new Login(metamaskPage);
@@ -22,8 +23,7 @@ describe('DID Book tests', () => {
     didBookPage = new DidBookPage();
   });
 
-  afterEach(async () => {
-    await login.clear();
+  afterAll(async () => {
     await page.close();
   });
 
@@ -38,7 +38,9 @@ describe('DID Book tests', () => {
 
     await dashboardPage.waitForLoaderDisappear();
     await dashboardPage.closeSnackbar();
+  });
 
+  it('should remove record from list', async() => {
     await page.waitForTimeout(3000);
     await didBookPage.findDID();
 
@@ -49,5 +51,5 @@ describe('DID Book tests', () => {
     await didBookPage.removeRecord(0);
     await page.waitForTimeout(1000);
     await didBookPage.amountOfRecords(0);
-  });
+  })
 });
