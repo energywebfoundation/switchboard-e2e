@@ -39,6 +39,7 @@ describe('DID Book tests', () => {
     await dashboardPage.waitForLoaderDisappear();
     await dashboardPage.closeSnackbar();
 
+    await page.waitForTimeout(3000);
     await didBookPage.findDID();
 
     await didBookPage.amountOfRecords(1);
