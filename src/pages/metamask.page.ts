@@ -21,6 +21,25 @@ export class MetamaskPage {
     await page.reload();
   }
 
+  async confirmTransaction() {
+    try {
+      await this.page.bringToFront();
+      const button2 = await Select.byTestData(this.page, 'home__activity-tab');
+      await button2.click();
+      const unconfirmed = await this.page.waitForSelector(
+        '.transaction-list-item--unconfirmed'
+      );
+      await unconfirmed.click();
+      await (await this.page.waitForSelector(`[data-testid="page-container-footer-next"]:not([disabled])`)).click()
+
+      await page.bringToFront();
+    } catch (e) {
+      console.log('In confirm transaction');
+      console.log(e);
+    }
+
+  }
+
   async acceptSwitch() {
     await this.dappeteer.page.bringToFront();
   }
@@ -93,6 +112,7 @@ export class MetamaskPage {
   }
 
   async sign() {
+    await this.page.bringToFront();
     const button2 = await Select.byTestData(this.page, 'home__activity-tab');
     await button2.click();
 
@@ -103,5 +123,7 @@ export class MetamaskPage {
 
     const sign = await Select.byTestData(this.page, 'request-signature__sign');
     await sign.click();
+
+    await page.bringToFront();
   }
 }

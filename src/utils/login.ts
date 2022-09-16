@@ -40,10 +40,12 @@ export class Login {
       await Router.navigateTo(route);
 
       console.log('didnt had ', await this.hasData());
+      await this.metamaskPage.page.waitForTimeout(5000);
 
       await this.metamaskPage.approve();
       await this.metamaskPage.sign();
       await page.bringToFront();
+      await page.waitForNavigation();
       await this.loaderPage.waitForLoaderDisappear();
     }
   }

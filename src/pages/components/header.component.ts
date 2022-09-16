@@ -8,7 +8,7 @@ export class HeaderComponent extends BaseAbstract {
 
   private readonly USER_MENU_SELECTOR = 'user-menu';
   private readonly LOGOUT_SELECTOR = 'menu-logout';
-  private readonly DID_BOOK_SELECTOR = 'menu-did-book'
+  private readonly DID_BOOK_SELECTOR = 'menu-did-book';
 
   async openMenu() {
     await page.click(Selector.byQaId(this.USER_MENU_SELECTOR));
@@ -18,10 +18,8 @@ export class HeaderComponent extends BaseAbstract {
     await page.click(Selector.byQaId(this.LOGOUT_SELECTOR));
   }
 
-  async getMenu() {
-    return await page.waitForSelector(
-      Selector.byQaId(this.USER_MENU_SELECTOR)
-    );
+  getMenu() {
+    return page.waitForSelector(Selector.byQaId(this.USER_MENU_SELECTOR));
   }
 
   async openDIDBook() {
@@ -47,7 +45,11 @@ export class HeaderComponent extends BaseAbstract {
   }
 
   async navigateToAssets(): Promise<void> {
+    await page.waitForTimeout(3000);
     await page.click(Selector.byQaId(this.ASSETS_SELECTOR));
+    // await page.waitForTimeout(3000);
+    await (await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)).click();
+    // await (await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)).click();
   }
 
   async navigateToGovernance(): Promise<void> {

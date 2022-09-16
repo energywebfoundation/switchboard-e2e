@@ -1,4 +1,5 @@
 export enum RouterPathEnum {
   Dashboard= '/dashboard',
-  Welcome = '/Welcome'
+  Welcome = '/welcome',
+  Assets = '/assets'
 }

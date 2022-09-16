@@ -1,20 +1,19 @@
 import { MetamaskPage } from './metamask.page';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Selector } from '../utils/selector';
-import { Login } from '../utils/login';
 import { LoaderSelectorEnum } from '../models';
-import { CONFIG } from '../config';
-import { Router } from '../utils';
+import { SnackbarComponent } from './components/snackbar.component';
 
 export abstract class BaseAbstract {
   metamaskPage: MetamaskPage;
+  snackbar: SnackbarComponent = new SnackbarComponent();
 
   constructor() {
     this.initMetamask();
   }
 
   public async waitForLoaderDisappear() {
-    await page.waitForSelector(Selector.byQaId(LoaderSelectorEnum.Loader), {
+    await page.waitForSelector(LoaderSelectorEnum.Loader, {
       hidden: true,
       timeout: 30000,
     });
@@ -25,9 +24,7 @@ export abstract class BaseAbstract {
   }
 
   async closeSnackbar() {
-    await (
-      await page.waitForSelector(LoaderSelectorEnum.ToastContainer)
-    ).click();
+    await new SnackbarComponent().closeSnackbar();
   }
 
   private async initMetamask() {

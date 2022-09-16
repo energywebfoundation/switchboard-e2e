@@ -1,17 +1,25 @@
 import { Selector } from '../utils/selector';
-import { LoaderSelectorEnum, MetamaskSelector } from '../models';
+import { LoaderSelectorEnum } from '../models';
 
 export class LoaderPage {
   public async waitForLoaderDisappear() {
-    await page.waitForSelector(Selector.byQaId(LoaderSelectorEnum.Loader), {
-      hidden: true,
-      timeout: 30000,
-    });
+    if (!await page.$(Selector.byQaId(LoaderSelectorEnum.Loader))) {
+      console.log('invisible');
+    }
+    if (await page.$(Selector.byQaId(LoaderSelectorEnum.Loader))) {
+      console.log('visible');
+      await page.waitForSelector(Selector.byQaId(LoaderSelectorEnum.Loader), {
+        hidden: true,
+        timeout: 45000,
+      });
+    }
   }
 
   async waitForPreloaderDisappear() {
     if (await page.$(LoaderSelectorEnum.PreLoader)) {
-      await page.waitForSelector(LoaderSelectorEnum.PreLoader, { hidden: false });
+      await page.waitForSelector(LoaderSelectorEnum.PreLoader, {
+        hidden: false,
+      });
     }
   }
 }
