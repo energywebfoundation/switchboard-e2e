@@ -57,6 +57,8 @@ export class AssetPage extends BaseAbstract {
 
     await page.type(this.NAME_INPUT, asset.name);
     if (asset.iconUrl) {
+      await page.click(this.ICON_INPUT, {delay: 100});
+      await page.keyboard.press('Backspace');
       await page.type(this.ICON_INPUT, asset.iconUrl);
     }
 
