@@ -53,6 +53,6 @@ describe('Assets tests', () => {
 
   it('should check asset history', async () => {
     await assetsPage.openHistory();
-    await page.waitForTimeout(15000);
+    // TODO: check correctness of this page.
   });
 });
