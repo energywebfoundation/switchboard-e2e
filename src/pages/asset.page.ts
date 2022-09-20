@@ -2,20 +2,21 @@ import { BaseAbstract } from './base.abstract';
 import { HeaderComponent } from './components/header.component';
 import { LoaderPage } from './loader.page';
 import { Selector } from '../utils/selector';
+import { TableActionsComponent } from './components/table-actions.component';
+import { EditPage } from './asset/edit.page';
+import { TransferOwnershipPage } from './transfer-ownership.page';
 
 export class AssetPage extends BaseAbstract {
   private readonly REGISTER_ASSET_BUTTON = Selector.byQaId('register-asset');
   private readonly DIALOG_REGISTER_ASSET_BUTTON = Selector.byQaId(
     'dialog-register-asset'
   );
-  private readonly ACTIONS_MENU = (id: number) => Selector.byQaId('menu-' + id);
-  private readonly EDIT_MENU_ACTION = Selector.byQaId('edit');
-  private readonly NAME_INPUT = Selector.byQaId('name');
-  private readonly ICON_INPUT = Selector.byQaId('icon');
-  private readonly SAVE_BUTTON = Selector.byQaId('next');
 
-  header: HeaderComponent = new HeaderComponent();
-  loader: LoaderPage = new LoaderPage();
+  private header: HeaderComponent = new HeaderComponent();
+  private loader: LoaderPage = new LoaderPage();
+  private tableActions: TableActionsComponent = new TableActionsComponent();
+  private editPage: EditPage = new EditPage();
+  private transferOwnership: TransferOwnershipPage = new TransferOwnershipPage();
 
   async isMyAssetPageVisible() {
     expect(
@@ -38,7 +39,6 @@ export class AssetPage extends BaseAbstract {
     await (
       await page.waitForSelector(this.DIALOG_REGISTER_ASSET_BUTTON)
     ).click();
-    console.log('register clicked');
     await this.metamaskPage.confirmTransaction();
     await page.waitForTimeout(1000);
     await this.loader.waitForLoaderDisappear();
@@ -46,25 +46,44 @@ export class AssetPage extends BaseAbstract {
   }
 
   async openEditAction(id: number = 0): Promise<void> {
-    await (await page.waitForSelector(this.ACTIONS_MENU(id))).click();
-    await page.waitForTimeout(1000);
-    await (await page.waitForSelector(this.EDIT_MENU_ACTION)).click();
+    await this.tableActions.openEditAction(id);
     expect(await page.waitForSelector('app-edit-asset-dialog')).toBeTruthy();
   }
 
-  async editIconWith(asset: { name: string; iconUrl?: string }): Promise<void> {
-    await page.waitForSelector(this.NAME_INPUT);
+  async openTransferAction(id: number = 0): Promise<void> {
+    await this.tableActions.openTransferAction(id);
+  }
 
-    await page.type(this.NAME_INPUT, asset.name);
-    if (asset.iconUrl) {
-      await page.click(this.ICON_INPUT, {delay: 100});
-      await page.keyboard.press('Backspace');
-      await page.type(this.ICON_INPUT, asset.iconUrl);
-    }
+  async openHistory(id: number = 0): Promise<void> {
+    await this.tableActions.openHistory(id);
+  }
 
-    await (await page.waitForSelector(this.SAVE_BUTTON)).click();
+  async cancelTransferAction(id: number = 0): Promise<void> {
+    await this.tableActions.cancelTransfer(id);
+  }
+
+  async confirmCancel(): Promise<void> {
+    await this.transferOwnership.confirmPopup();
+
+    await this.confirmMetamaskTransaction();
+  }
+
+  private async confirmMetamaskTransaction(): Promise<void> {
+    await this.metamaskPage.confirmTransaction();
+    await this.loader.waitForLoaderDisappear();
+  }
+
+  async editAsset(asset: { name: string; iconUrl?: string }): Promise<void> {
+    await this.editPage.editAssetWith(asset);
     await this.metamaskPage.sign();
     await this.metamaskPage.confirmTransaction();
     await this.loader.waitForLoaderDisappear();
+  }
+
+  async transferOwnershipTo(did: string) {
+    await this.transferOwnership.setDID(did);
+    await this.transferOwnership.send();
+    await this.transferOwnership.confirmPopup();
+    await this.confirmMetamaskTransaction();
   }
 }

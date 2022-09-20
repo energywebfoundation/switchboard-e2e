@@ -4,6 +4,7 @@ import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Login } from '../../src/utils';
 import { AssetPage } from '../../src/pages/asset.page';
 import { RouterPathEnum } from '../../src/models/router-path.enum';
+import { CONFIG } from '../../src/config';
 
 describe('Assets tests', () => {
   let metamaskPage: MetamaskPage;
@@ -33,9 +34,25 @@ describe('Assets tests', () => {
   it('should change asset name', async () => {
     await assetsPage.openEditAction();
 
-    await assetsPage.editIconWith({name: 'Test name', iconUrl: 'https://fajnepodroze.pl/wp-content/uploads/2020/04/gil.jpg'});
-    await page.waitForTimeout(15000);
+    await assetsPage.editAsset({
+      name: 'Test name',
+      iconUrl: 'https://fajnepodroze.pl/wp-content/uploads/2020/04/gil.jpg',
+    });
   });
 
-  it('should transfer created asset to different DID', async () => {});
+  it('should transfer created asset to different DID', async () => {
+    await assetsPage.openTransferAction();
+    await assetsPage.transferOwnershipTo(CONFIG.publicKeyForTransfer);
+
+  });
+
+  it('should cancel ownership transfer', async () => {
+    await assetsPage.cancelTransferAction();
+    await assetsPage.confirmCancel();
+  });
+
+  it('should check asset history', async () => {
+    await assetsPage.openHistory();
+    await page.waitForTimeout(15000);
+  });
 });

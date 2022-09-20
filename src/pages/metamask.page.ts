@@ -30,6 +30,7 @@ export class MetamaskPage {
         '.transaction-list-item--unconfirmed'
       );
       await unconfirmed.click();
+      await this.page.waitForTimeout(1000);
       await (await this.page.waitForSelector(`[data-testid="page-container-footer-next"]:not([disabled])`)).click()
 
       await page.bringToFront();
