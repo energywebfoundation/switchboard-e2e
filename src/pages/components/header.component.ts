@@ -23,8 +23,6 @@ export class HeaderComponent extends BaseAbstract {
   }
 
   async openDIDBook() {
-    await this.waitForLoaderDisappear();
-
     await (await this.getMenu()).click();
     await page.waitForTimeout(1000);
     await page.click(Selector.byQaId(this.DID_BOOK_SELECTOR));
@@ -47,9 +45,7 @@ export class HeaderComponent extends BaseAbstract {
   async navigateToAssets(): Promise<void> {
     await page.waitForTimeout(3000);
     await page.click(Selector.byQaId(this.ASSETS_SELECTOR));
-    // await page.waitForTimeout(3000);
     await (await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)).click();
-    // await (await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)).click();
   }
 
   async navigateToGovernance(): Promise<void> {

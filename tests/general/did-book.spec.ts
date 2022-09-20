@@ -18,7 +18,6 @@ describe('DID Book tests', () => {
     await login.reinitializeIfNeeded();
 
     dashboardPage = new DashboardPage();
-    await dashboardPage.waitForPreloaderDisappear();
 
     didBookPage = new DidBookPage();
   });

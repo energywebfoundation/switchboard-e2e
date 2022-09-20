@@ -23,17 +23,12 @@ export class Login {
     }
   }
 
-  async reinitialize(route: RouterPathEnum = RouterPathEnum.Dashboard) {
-    await Router.navigateTo(route);
-    await this.prepareForReinitialization();
-  }
-
   async reinitializeIfNeeded(route: RouterPathEnum = RouterPathEnum.Dashboard) {
     await Router.navigateTo();
     await this.loaderPage.waitForPreloaderDisappear();
     const hasData = await this.hasData();
 
-    console.log('hasData', hasData)
+    console.log('hasData', hasData);
 
     if (!hasData) {
       await this.prepareForReinitialization();
@@ -45,9 +40,14 @@ export class Login {
       await this.metamaskPage.approve();
       await this.metamaskPage.sign();
       await page.bringToFront();
-      await page.waitForNavigation();
-      await this.loaderPage.waitForLoaderDisappear();
+    } else if (route !== RouterPathEnum.Dashboard) {
+      await Router.navigateTo(route);
     }
+
+    if (route !== RouterPathEnum.Dashboard) {
+      await page.waitForNavigation();
+    }
+    await this.loaderPage.waitForLoaderDisappear();
   }
 
   async clear() {
@@ -60,8 +60,8 @@ export class Login {
     return page.evaluate(() => {
       return Boolean(
         localStorage.getItem('ProviderType') &&
-        localStorage.getItem('isEthSigner') &&
-        localStorage.getItem('PublicKey')
+          localStorage.getItem('isEthSigner') &&
+          localStorage.getItem('PublicKey')
       );
     });
   }

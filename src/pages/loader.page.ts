@@ -10,7 +10,7 @@ export class LoaderPage {
       console.log('visible');
       await page.waitForSelector(Selector.byQaId(LoaderSelectorEnum.Loader), {
         hidden: true,
-        timeout: 45000,
+        timeout: 30000,
       });
     }
   }
