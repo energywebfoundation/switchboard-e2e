@@ -17,6 +17,7 @@ module.exports = async function () {
   const browser = await launch(puppeteer, {
     ...PUPPETEER_CONFIG,
     metamaskPath: './metamask/metamask-chrome-10.15.1',
+    headless: false,
   });
   try {
     // await setupMetamask(browser, metamaskOptions);
