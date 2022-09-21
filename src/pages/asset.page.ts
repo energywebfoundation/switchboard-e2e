@@ -5,6 +5,7 @@ import { Selector } from '../utils/selector';
 import { TableActionsComponent } from './components/table-actions.component';
 import { EditPage } from './asset/edit.page';
 import { TransferOwnershipPage } from './transfer-ownership.page';
+import { HistoryPage } from './asset/history.page';
 
 export class AssetPage extends BaseAbstract {
   private readonly REGISTER_ASSET_BUTTON = Selector.byQaId('register-asset');
@@ -16,7 +17,9 @@ export class AssetPage extends BaseAbstract {
   private loader: LoaderPage = new LoaderPage();
   private tableActions: TableActionsComponent = new TableActionsComponent();
   private editPage: EditPage = new EditPage();
-  private transferOwnership: TransferOwnershipPage = new TransferOwnershipPage();
+  private transferOwnership: TransferOwnershipPage =
+    new TransferOwnershipPage();
+  private ownershipHistory: HistoryPage = new HistoryPage();
 
   async isMyAssetPageVisible() {
     expect(
@@ -56,6 +59,17 @@ export class AssetPage extends BaseAbstract {
 
   async openHistory(id: number = 0): Promise<void> {
     await this.tableActions.openHistory(id);
+  }
+
+  async checkHistoryElement(
+    id: number,
+    element: { type: string; emittedDate?: string }
+  ) {
+    await this.ownershipHistory.checkType(id, element.type);
+    if (element.emittedDate) {
+      await this.ownershipHistory.checkEmittedDate(id, element.emittedDate);
+    }
+
   }
 
   async cancelTransferAction(id: number = 0): Promise<void> {

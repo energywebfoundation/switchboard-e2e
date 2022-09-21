@@ -43,7 +43,6 @@ describe('Assets tests', () => {
   it('should transfer created asset to different DID', async () => {
     await assetsPage.openTransferAction();
     await assetsPage.transferOwnershipTo(CONFIG.publicKeyForTransfer);
-
   });
 
   it('should cancel ownership transfer', async () => {
@@ -53,6 +52,8 @@ describe('Assets tests', () => {
 
   it('should check asset history', async () => {
     await assetsPage.openHistory();
-    // TODO: check correctness of this page.
+    await assetsPage.checkHistoryElement(0, { type: 'ASSET_CREATED' });
+    await assetsPage.checkHistoryElement(1, { type: 'ASSET_OFFERED' });
+    await assetsPage.checkHistoryElement(2, { type: 'ASSET_OFFER_CANCELED' });
   });
 });
