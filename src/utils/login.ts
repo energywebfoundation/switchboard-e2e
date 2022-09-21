@@ -34,11 +34,19 @@ export class Login {
       await this.prepareForReinitialization();
       await Router.navigateTo(route);
 
+
       console.log('didnt had ', await this.hasData());
-      await this.metamaskPage.page.waitForTimeout(5000);
+      await this.metamaskPage.page.waitForTimeout(2000);
+      await this.metamaskPage.bringToFrontAndReload();
+      await this.metamaskPage.page.waitForTimeout(2000);
 
       await this.metamaskPage.approve();
+      await this.metamaskPage.page.waitForTimeout(2000);
+      console.log('approve');
+      console.log(page.url());
       await this.metamaskPage.sign();
+      await this.metamaskPage.page.waitForTimeout(2000);
+      console.log('sign');
       await page.bringToFront();
     } else if (route !== RouterPathEnum.Dashboard) {
       await Router.navigateTo(route);

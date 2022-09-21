@@ -46,8 +46,8 @@ export class MetamaskPage {
   }
 
   async approve(): Promise<void> {
-    // await this.closePopOver();
     await this.page.bringToFront();
+
     await this.dappeteer.approve();
   }
 
@@ -114,6 +114,7 @@ export class MetamaskPage {
 
   async sign() {
     await this.page.bringToFront();
+    await this.page.waitForTimeout(2000);
     const button2 = await Select.byTestData(this.page, 'home__activity-tab');
     await button2.click();
 
