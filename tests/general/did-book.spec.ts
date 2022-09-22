@@ -42,6 +42,7 @@ describe('DID Book tests', () => {
   it('should remove record from list', async() => {
     await page.waitForTimeout(3000);
     await didBookPage.findDID();
+    await page.waitForTimeout(1000);
 
     await didBookPage.amountOfRecords(1);
 

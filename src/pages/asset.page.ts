@@ -14,7 +14,6 @@ export class AssetPage extends BaseAbstract {
   );
 
   private header: HeaderComponent = new HeaderComponent();
-  private loader: LoaderPage = new LoaderPage();
   private tableActions: TableActionsComponent = new TableActionsComponent();
   private editPage: EditPage = new EditPage();
   private transferOwnership: TransferOwnershipPage =

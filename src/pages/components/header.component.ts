@@ -23,6 +23,7 @@ export class HeaderComponent extends BaseAbstract {
   }
 
   async openDIDBook() {
+    await page.waitForTimeout(1000);
     await (await this.getMenu()).click();
     await page.waitForTimeout(1000);
     await page.click(Selector.byQaId(this.DID_BOOK_SELECTOR));

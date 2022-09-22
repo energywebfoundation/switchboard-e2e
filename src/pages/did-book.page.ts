@@ -1,4 +1,5 @@
 import { Selector } from '../utils/selector';
+import { fillInput } from '../utils/fill-input';
 
 export class DidBookPage {
   private readonly INPUT_LABEL = 'label';
@@ -7,7 +8,7 @@ export class DidBookPage {
   private readonly CANCEL_BUTTON = 'cancel';
   private readonly INPUT_FILTER_DID = 'filter-did';
   private readonly HOST = 'app-did-book';
-  private readonly REMOVE_RECORD = 'remove-'
+  private readonly REMOVE_RECORD = 'remove-';
 
   /**
    * This property is generated depending on actual local timestamp. It's the easiest way to make it unique.
@@ -23,20 +24,19 @@ export class DidBookPage {
     if (value && value !== this.RANDOM_LABEL) {
       this.RANDOM_LABEL = value;
     }
-    await page.type(Selector.byQaId(this.INPUT_LABEL), this.RANDOM_LABEL);
+    await fillInput(this.RANDOM_LABEL, Selector.byQaId(this.INPUT_LABEL));
   }
 
   async setDID(value: string) {
-    await page.type(Selector.byQaId(this.INPUT_DID), value);
+    await fillInput(value, Selector.byQaId(this.INPUT_DID));
   }
 
   async findDID() {
-    await page.focus(Selector.byQaId(this.INPUT_FILTER_DID));
-    await page.type(Selector.byQaId(this.INPUT_FILTER_DID), this.RANDOM_LABEL);
+    await fillInput(this.RANDOM_LABEL, Selector.byQaId(this.INPUT_FILTER_DID));
   }
 
   async amountOfRecords(amount: number): Promise<void> {
-    const rows = await page.$$eval('tbody tr', elements => elements.length)
+    const rows = await page.$$eval('tbody tr', (elements) => elements.length);
     expect(rows).toEqual(amount);
   }
 
@@ -63,6 +63,10 @@ export class DidBookPage {
   }
 
   async removeRecord(record: number) {
-    await (await page.waitForSelector(`${Selector.byQaId(this.REMOVE_RECORD + record)}`)).click();
+    await (
+      await page.waitForSelector(
+        `${Selector.byQaId(this.REMOVE_RECORD + record)}`
+      )
+    ).click();
   }
 }
