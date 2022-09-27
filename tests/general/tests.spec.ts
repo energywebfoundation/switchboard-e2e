@@ -1,7 +1,7 @@
 import { MetamaskPage } from '../../src/pages/metamask.page';
 import { DashboardPage } from '../../src/pages/dashboard.page';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
-import { Login, Router } from '../../src/utils';
+import { Login } from '../../src/utils';
 import { DidBookPage } from '../../src/pages/did-book.page';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
 import { CONFIG } from '../../src/config';
@@ -65,8 +65,6 @@ describe('E2E tests', () => {
       //   waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'],
       // });
       await assetsPage.waitForLoaderDisappear();
-
-
     });
     it('should register asset', async () => {
       await assetsPage.registerAsset();
