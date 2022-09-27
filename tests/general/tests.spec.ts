@@ -59,7 +59,7 @@ describe('E2E tests', () => {
   describe('assets', () => {
     beforeAll(async () => {
       await Router.navigateTo(RouterPathEnum.Assets);
-      await page.waitForNavigation({waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'],})
+      await page.waitForNavigation();
 
       assetsPage = new AssetPage();
     });
