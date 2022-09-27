@@ -6,7 +6,6 @@ import { DidBookPage } from '../../src/pages/did-book.page';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
 import { CONFIG } from '../../src/config';
 import { AssetPage } from '../../src/pages/asset.page';
-import { RouterPathEnum } from '../../src/models/router-path.enum';
 
 describe('E2E tests', () => {
   let metamaskPage: MetamaskPage;
