@@ -2,6 +2,7 @@ import { RouterPathEnum } from '../models/router-path.enum';
 import { Router } from './router';
 import { MetamaskPage } from '../pages/metamask.page';
 import { LoaderPage } from '../pages/loader.page';
+import { waitForTimeout } from './wait-for-timeout';
 
 export class Login {
   loaderPage = new LoaderPage();
@@ -32,18 +33,24 @@ export class Login {
 
     if (!hasData) {
       await this.prepareForReinitialization();
-      await Router.navigateTo(route);
+      await page.reload({waitUntil: ['load', 'domcontentloaded']})
 
 
       console.log('didnt had ', await this.hasData());
-      await this.metamaskPage.bringToFrontAndReload();
-      await this.metamaskPage.page.waitForTimeout(2000);
-
+      await this.metamaskPage.page.bringToFront();
+      console.log('metamask on front');
+      await waitForTimeout(2000);
+      console.log('will click approve');
       await this.metamaskPage.approve();
-      await this.metamaskPage.page.waitForTimeout(2000);
+      console.log('clicking approve');
+      await waitForTimeout(2000);
+      console.log('will click sign');
       await this.metamaskPage.sign();
-      await this.metamaskPage.page.waitForTimeout(2000);
+      console.log('sign clicked');
+      await waitForTimeout(2000);
+      console.log('will bring page to front');
       await page.bringToFront();
+      console.log('page to front');
     } else if (route !== RouterPathEnum.Dashboard) {
       await Router.navigateTo(route);
     }
