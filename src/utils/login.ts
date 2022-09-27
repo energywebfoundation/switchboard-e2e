@@ -38,9 +38,11 @@ export class Login {
 
       console.log('didnt had ', await this.hasData());
       await this.metamaskPage.page.bringToFront();
+      await this.metamaskPage.page.reload();
       console.log('metamask on front');
       await waitForTimeout(2000);
       console.log('will click approve');
+      // request-signature__sign
       await this.metamaskPage.approve();
       console.log('clicking approve');
       await waitForTimeout(2000);
