@@ -1,5 +1,6 @@
 import { BaseAbstract } from '../base.abstract';
 import { Selector } from '../../utils/selector';
+import { waitForTimeout } from '../../utils/wait-for-timeout';
 
 export class HeaderComponent extends BaseAbstract {
   private readonly ENROLMENT_SELECTOR = 'header-enrolment';
@@ -23,11 +24,11 @@ export class HeaderComponent extends BaseAbstract {
   }
 
   async openDIDBook() {
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await (await this.getMenu()).click();
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await page.click(Selector.byQaId(this.DID_BOOK_SELECTOR));
-    await page.waitForTimeout(100);
+    await waitForTimeout(100);
     expect(await page.$('app-did-book-form')).toBeTruthy();
   }
 
@@ -44,9 +45,11 @@ export class HeaderComponent extends BaseAbstract {
   }
 
   async navigateToAssets(): Promise<void> {
-    await page.waitForTimeout(3000);
+    await waitForTimeout(3000);
     await page.click(Selector.byQaId(this.ASSETS_SELECTOR));
-    await (await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)).click();
+    await (
+      await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)
+    ).click();
   }
 
   async navigateToGovernance(): Promise<void> {

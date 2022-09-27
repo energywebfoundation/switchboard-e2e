@@ -1,7 +1,9 @@
 import { Selector } from '../utils/selector';
 import { fillInput } from '../utils/fill-input';
+import { BaseAbstract } from './base.abstract';
+import { waitForTimeout } from '../utils/wait-for-timeout';
 
-export class DidBookPage {
+export class DidBookPage extends BaseAbstract {
   private readonly INPUT_LABEL = 'label';
   private readonly INPUT_DID = 'did';
   private readonly ADD_BUTTON = 'add';
@@ -17,7 +19,7 @@ export class DidBookPage {
 
   async waitForLoad() {
     await page.waitForSelector(this.HOST);
-    await page.waitForTimeout(100);
+    await waitForTimeout(100);
   }
 
   async setLabel(value?: string): Promise<void> {
@@ -68,5 +70,12 @@ export class DidBookPage {
         `${Selector.byQaId(this.REMOVE_RECORD + record)}`
       )
     ).click();
+  }
+
+  async close() {
+    await this.snackbar.closeSnackbar();
+    await waitForTimeout(2000);
+    await (await page.waitForSelector('h4.mat-dialog-title button')).click();
+    await waitForTimeout(15000);
   }
 }

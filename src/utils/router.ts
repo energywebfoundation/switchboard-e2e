@@ -6,5 +6,4 @@ export class Router {
       waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'],
     });
   }
-
 }

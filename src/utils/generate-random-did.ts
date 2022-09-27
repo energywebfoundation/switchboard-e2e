@@ -1,5 +1,4 @@
-const CHARACTERS =
-  'ABCDEFabcdef0123456789';
+const CHARACTERS = 'ABCDEFabcdef0123456789';
 
 export const generateRandomDid = () => {
   let address = '';

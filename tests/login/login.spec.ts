@@ -18,7 +18,6 @@ describe('login tests', () => {
     await Router.navigateTo();
     await new Login(metamaskPage).clear();
 
-
     welcomePage = new WelcomePage();
     dashboardPage = new DashboardPage();
     popupPage = new PopupPage();

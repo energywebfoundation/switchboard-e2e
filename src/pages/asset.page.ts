@@ -1,11 +1,11 @@
 import { BaseAbstract } from './base.abstract';
 import { HeaderComponent } from './components/header.component';
-import { LoaderPage } from './loader.page';
 import { Selector } from '../utils/selector';
 import { TableActionsComponent } from './components/table-actions.component';
 import { EditPage } from './asset/edit.page';
 import { TransferOwnershipPage } from './transfer-ownership.page';
 import { HistoryPage } from './asset/history.page';
+import { waitForTimeout } from '../utils/wait-for-timeout';
 
 export class AssetPage extends BaseAbstract {
   private readonly REGISTER_ASSET_BUTTON = Selector.byQaId('register-asset');
@@ -27,22 +27,21 @@ export class AssetPage extends BaseAbstract {
   }
 
   async goToAssets() {
-    await this.loader.waitForLoaderDisappear();
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await this.header.navigateToAssets();
     await this.loader.waitForLoaderDisappear();
     await this.isMyAssetPageVisible();
   }
 
   async registerAsset() {
-    await page.waitForTimeout(1000);
+    await waitForTimeout(2000);
     await (await page.waitForSelector(this.REGISTER_ASSET_BUTTON)).click();
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await (
       await page.waitForSelector(this.DIALOG_REGISTER_ASSET_BUTTON)
     ).click();
     await this.metamaskPage.confirmTransaction();
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await this.loader.waitForLoaderDisappear();
     expect(await this.snackbar.isVisible).toBeTruthy();
   }
@@ -68,7 +67,6 @@ export class AssetPage extends BaseAbstract {
     if (element.emittedDate) {
       await this.ownershipHistory.checkEmittedDate(id, element.emittedDate);
     }
-
   }
 
   async cancelTransferAction(id: number = 0): Promise<void> {

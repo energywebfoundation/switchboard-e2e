@@ -4,6 +4,8 @@ import { Login } from './login';
 
 export const createNewPage = async () => {
   (global as any)['page'] = await browser.newPage();
-  const login = await new Login(new MetamaskPage(await getMetamaskWindow(browser)));
+  const login = await new Login(
+    new MetamaskPage(await getMetamaskWindow(browser))
+  );
   await login.reinitializeIfNeeded();
-}
+};

@@ -31,14 +31,17 @@ export class MetamaskPage {
       );
       await unconfirmed.click();
       await this.page.waitForTimeout(1000);
-      await (await this.page.waitForSelector(`[data-testid="page-container-footer-next"]:not([disabled])`)).click()
+      await (
+        await this.page.waitForSelector(
+          `[data-testid="page-container-footer-next"]:not([disabled])`
+        )
+      ).click();
 
       await page.bringToFront();
     } catch (e) {
       console.log('In confirm transaction');
       console.log(e);
     }
-
   }
 
   async acceptSwitch() {
@@ -114,17 +117,10 @@ export class MetamaskPage {
 
   async sign() {
     await this.page.bringToFront();
+    await this.page.reload();
     await this.page.waitForTimeout(2000);
-    const button2 = await Select.byTestData(this.page, 'home__activity-tab');
-    await button2.click();
 
-    const unconfirmed = await this.page.waitForSelector(
-      '.transaction-list-item--unconfirmed'
-    );
-    await unconfirmed.click();
-
-    const sign = await Select.byTestData(this.page, 'request-signature__sign');
-    await sign.click();
+    await this.dappeteer.sign();
 
     await page.bringToFront();
   }

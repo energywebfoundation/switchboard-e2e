@@ -1,16 +1,20 @@
 import { Selector } from '../../utils/selector';
+import { waitForTimeout } from '../../utils/wait-for-timeout';
 
 export class TableActionsComponent {
   private readonly ACTIONS_MENU = (id: number) => Selector.byQaId('menu-' + id);
   private readonly EDIT_MENU_ACTION = Selector.byQaId('edit');
   private readonly TRANSFER_OWNERSHIP_BUTTON =
     Selector.byQaId('transfer-ownership');
-  private readonly CANCEL_TRANSFER_BUTTON =
-    Selector.byQaId('cancel-transfer');
+  private readonly CANCEL_TRANSFER_BUTTON = Selector.byQaId('cancel-transfer');
   private readonly SHOW_HISTORY = Selector.byQaId('history');
 
   async openEditAction(id: number): Promise<void> {
-    await this.openAction(id, this.EDIT_MENU_ACTION);
+    try {
+      await this.openAction(id, this.EDIT_MENU_ACTION);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async openTransferAction(id: number): Promise<void> {
@@ -27,7 +31,7 @@ export class TableActionsComponent {
 
   private async openAction(id: number, selector: string) {
     await (await page.waitForSelector(this.ACTIONS_MENU(id))).click();
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await (await page.waitForSelector(selector)).click();
   }
 }

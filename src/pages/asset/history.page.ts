@@ -6,15 +6,19 @@ export class HistoryPage {
   private readonly EMITTED_DATE = Selector.byQaId('emitted-date');
   private readonly TYPE = Selector.byQaId('type');
 
-  async checkType(id: number,type: string) {
-    const element = await page.waitForSelector(`${this.HISTORY_ITEM(id)} ${this.TYPE}`);
+  async checkType(id: number, type: string) {
+    const element = await page.waitForSelector(
+      `${this.HISTORY_ITEM(id)} ${this.TYPE}`
+    );
 
-    expect(await element.evaluate(el => el.textContent)).toEqual(type);
+    expect(await element.evaluate((el) => el.textContent)).toEqual(type);
   }
 
-  async checkEmittedDate(id: number,date: string) {
-    const element = await page.waitForSelector(`${this.HISTORY_ITEM(id)} ${this.EMITTED_DATE}`);
+  async checkEmittedDate(id: number, date: string) {
+    const element = await page.waitForSelector(
+      `${this.HISTORY_ITEM(id)} ${this.EMITTED_DATE}`
+    );
 
-    expect(await element.evaluate(el => el.textContent)).toEqual(date);
+    expect(await element.evaluate((el) => el.textContent)).toEqual(date);
   }
 }

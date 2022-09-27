@@ -6,7 +6,10 @@ export class EditPage {
   private readonly ICON_INPUT = Selector.byQaId('icon');
   private readonly SAVE_BUTTON = Selector.byQaId('next');
 
-  async editAssetWith(asset: { name: string; iconUrl?: string }): Promise<void> {
+  async editAssetWith(asset: {
+    name: string;
+    iconUrl?: string;
+  }): Promise<void> {
     await page.waitForSelector(this.NAME_INPUT);
 
     await page.type(this.NAME_INPUT, asset.name);
