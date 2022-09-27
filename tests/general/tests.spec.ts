@@ -53,15 +53,21 @@ describe('E2E tests', () => {
       await didBookPage.removeRecord(0);
       await page.waitForTimeout(1000);
       await didBookPage.amountOfRecords(0);
+      await didBookPage.close();
     });
   });
 
   describe('assets', () => {
     beforeAll(async () => {
-      await Router.navigateTo(RouterPathEnum.Assets);
-      await page.waitForNavigation();
-
       assetsPage = new AssetPage();
+      await assetsPage.goToAssets();
+      // await Router.navigateTo(RouterPathEnum.Assets);
+      // await page.waitForNavigation({
+      //   waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'],
+      // });
+      await assetsPage.waitForLoaderDisappear();
+
+
     });
     it('should register asset', async () => {
       await assetsPage.registerAsset();

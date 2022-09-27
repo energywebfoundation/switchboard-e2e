@@ -1,7 +1,8 @@
 import { Selector } from '../utils/selector';
 import { fillInput } from '../utils/fill-input';
+import { BaseAbstract } from './base.abstract';
 
-export class DidBookPage {
+export class DidBookPage extends BaseAbstract{
   private readonly INPUT_LABEL = 'label';
   private readonly INPUT_DID = 'did';
   private readonly ADD_BUTTON = 'add';
@@ -68,5 +69,12 @@ export class DidBookPage {
         `${Selector.byQaId(this.REMOVE_RECORD + record)}`
       )
     ).click();
+  }
+
+  async close() {
+    await this.snackbar.closeSnackbar();
+    await page.waitForTimeout(2000);
+    await (await page.waitForSelector('h4.mat-dialog-title button')).click();
+    await page.waitForTimeout(15000);
   }
 }

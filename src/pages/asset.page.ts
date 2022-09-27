@@ -27,7 +27,6 @@ export class AssetPage extends BaseAbstract {
   }
 
   async goToAssets() {
-    await this.loader.waitForLoaderDisappear();
     await page.waitForTimeout(1000);
     await this.header.navigateToAssets();
     await this.loader.waitForLoaderDisappear();
@@ -35,7 +34,7 @@ export class AssetPage extends BaseAbstract {
   }
 
   async registerAsset() {
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
     await (await page.waitForSelector(this.REGISTER_ASSET_BUTTON)).click();
     await page.waitForTimeout(1000);
     await (
