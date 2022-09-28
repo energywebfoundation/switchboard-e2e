@@ -1,6 +1,7 @@
 import { HeaderComponent } from './components/header.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { BaseAbstract } from './base.abstract';
+import { waitForTimeout } from '../utils/wait-for-timeout';
 
 export class DashboardPage extends BaseAbstract {
   header: HeaderComponent = new HeaderComponent();
@@ -20,7 +21,7 @@ export class DashboardPage extends BaseAbstract {
 
     expect(await this.header.getMenu()).toBeTruthy();
     await (await this.header.getMenu()).click();
-    await page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     expect(await this.header.getLogoutButton()).toBeTruthy();
     await (await this.header.getLogoutButton()).click();
   }

@@ -1,5 +1,6 @@
 import { getMetamaskWindow, setupMetamask } from '@chainsafe/dappeteer';
 import { clickOnButton } from '@chainsafe/dappeteer/dist/helpers';
+import { waitForTimeout } from './wait-for-timeout';
 
 export const setupVoltaMetamask = async () => {
   const dappeteer = await setupMetamask(browser, {
@@ -16,8 +17,8 @@ export const setupVoltaMetamask = async () => {
   } catch (e) {
     console.log('error from adding network');
     const metamask = await getMetamaskWindow(browser);
-    await metamask.page.waitForTimeout(1000);
+    await waitForTimeout(1000);
     await clickOnButton(metamask.page, 'Save');
-    await metamask.page.waitForTimeout(1000);
+    await waitForTimeout(1000);
   }
 };

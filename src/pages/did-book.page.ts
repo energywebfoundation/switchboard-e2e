@@ -1,6 +1,7 @@
 import { Selector } from '../utils/selector';
 import { fillInput } from '../utils/fill-input';
 import { BaseAbstract } from './base.abstract';
+import { waitForTimeout } from '../utils/wait-for-timeout';
 
 export class DidBookPage extends BaseAbstract{
   private readonly INPUT_LABEL = 'label';
@@ -18,7 +19,7 @@ export class DidBookPage extends BaseAbstract{
 
   async waitForLoad() {
     await page.waitForSelector(this.HOST);
-    await page.waitForTimeout(100);
+    await waitForTimeout(100);
   }
 
   async setLabel(value?: string): Promise<void> {
@@ -73,8 +74,8 @@ export class DidBookPage extends BaseAbstract{
 
   async close() {
     await this.snackbar.closeSnackbar();
-    await page.waitForTimeout(2000);
+    await waitForTimeout(2000);
     await (await page.waitForSelector('h4.mat-dialog-title button')).click();
-    await page.waitForTimeout(15000);
+    await waitForTimeout(15000);
   }
 }
