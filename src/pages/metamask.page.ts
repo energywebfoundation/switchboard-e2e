@@ -117,24 +117,8 @@ export class MetamaskPage {
     await this.page.bringToFront();
     await this.page.reload();
     await this.page.waitForTimeout(2000);
-    // const d = await Promise.race([Select.byTestData(this.page, 'home__activity-tab'), Select.byTestData(this.page, 'home__activity-tab')]);
-    // console.log(d);
-    // if (await this.page.$('[data-testid="home__activity-tab"]')) {
-    //   console.log('will click home__activity-tab in sign method');
-    //   const button2 = await Select.byTestData(this.page, 'home__activity-tab');
-    //   await button2.click();
-    //   console.log('clicked home__activity-tab in sign method')
-    //
-    //   const unconfirmed = await this.page.waitForSelector(
-    //     '.transaction-list-item--unconfirmed'
-    //   );
-    //   await unconfirmed.click();
-    // }
 
-    // const sign = await Select.byTestData(this.page, 'request-signature__sign');
-    // await sign.click();
     await this.dappeteer.sign();
-    // await (await Select.byTestData(this.page, 'request-signature__sign')).click();
 
     await page.bringToFront();
   }
