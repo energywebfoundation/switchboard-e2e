@@ -6,6 +6,7 @@ import { DidBookPage } from '../../src/pages/did-book.page';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
 import { CONFIG } from '../../src/config';
 import { AssetPage } from '../../src/pages/asset.page';
+import { waitForTimeout } from '../../src/utils/wait-for-timeout';
 
 describe('E2E tests', () => {
   let metamaskPage: MetamaskPage;
@@ -41,16 +42,16 @@ describe('E2E tests', () => {
     });
 
     it('should remove record from list', async () => {
-      await page.waitForTimeout(3000);
+      await waitForTimeout(3000);
       await didBookPage.findDID();
-      await page.waitForTimeout(1000);
+      await waitForTimeout(1000);
 
       await didBookPage.amountOfRecords(1);
 
-      await page.waitForTimeout(1000);
+      await waitForTimeout(1000);
 
       await didBookPage.removeRecord(0);
-      await page.waitForTimeout(1000);
+      await waitForTimeout(1000);
       await didBookPage.amountOfRecords(0);
       await didBookPage.close();
     });
