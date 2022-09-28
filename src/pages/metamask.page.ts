@@ -31,7 +31,7 @@ export class MetamaskPage {
         '.transaction-list-item--unconfirmed'
       );
       await unconfirmed.click();
-      await waitForTimeout(1000);
+      await this.page.waitForTimeout(1000);
       await (await this.page.waitForSelector(`[data-testid="page-container-footer-next"]:not([disabled])`)).click()
 
       await page.bringToFront();
@@ -61,7 +61,7 @@ export class MetamaskPage {
 
   async login() {
     await this.closePopOver();
-    await waitForTimeout(100);
+    await this.page.waitForTimeout(100);
     if (await this.page.$('button.button.btn-primary')) {
       await this.approve();
     }
@@ -116,19 +116,25 @@ export class MetamaskPage {
   async sign() {
     await this.page.bringToFront();
     await this.page.reload();
-    await waitForTimeout(2000);
-    console.log('will click home__activity-tab in sign method')
-    const button2 = await Select.byTestData(this.page, 'home__activity-tab');
-    await button2.click();
-    console.log('clicked home__activity-tab in sign method')
+    await this.page.waitForTimeout(2000);
+    // const d = await Promise.race([Select.byTestData(this.page, 'home__activity-tab'), Select.byTestData(this.page, 'home__activity-tab')]);
+    // console.log(d);
+    // if (await this.page.$('[data-testid="home__activity-tab"]')) {
+    //   console.log('will click home__activity-tab in sign method');
+    //   const button2 = await Select.byTestData(this.page, 'home__activity-tab');
+    //   await button2.click();
+    //   console.log('clicked home__activity-tab in sign method')
+    //
+    //   const unconfirmed = await this.page.waitForSelector(
+    //     '.transaction-list-item--unconfirmed'
+    //   );
+    //   await unconfirmed.click();
+    // }
 
-    const unconfirmed = await this.page.waitForSelector(
-      '.transaction-list-item--unconfirmed'
-    );
-    await unconfirmed.click();
-
-    const sign = await Select.byTestData(this.page, 'request-signature__sign');
-    await sign.click();
+    // const sign = await Select.byTestData(this.page, 'request-signature__sign');
+    // await sign.click();
+    await this.dappeteer.sign();
+    // await (await Select.byTestData(this.page, 'request-signature__sign')).click();
 
     await page.bringToFront();
   }

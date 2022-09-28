@@ -17,8 +17,8 @@ export const setupVoltaMetamask = async () => {
   } catch (e) {
     console.log('error from adding network');
     const metamask = await getMetamaskWindow(browser);
-    await waitForTimeout(1000);
+    await metamask.page.waitForTimeout(1000);
     await clickOnButton(metamask.page, 'Save');
-    await waitForTimeout(1000);
+    await metamask.page.waitForTimeout(1000);
   }
 };

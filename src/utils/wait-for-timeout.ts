@@ -1,3 +1,4 @@
 export const waitForTimeout = async (milliseconds: number) => {
-  new Promise(r => setTimeout(r, milliseconds));
+  await page.waitForTimeout(milliseconds);
+  // return new Promise(r => setTimeout(r, milliseconds));
 }
