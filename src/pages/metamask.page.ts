@@ -3,7 +3,6 @@ import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { Selector } from '../utils/selector';
 import { MetamaskSelector } from '../models';
-import { waitForTimeout } from '../utils/wait-for-timeout';
 
 export class MetamaskPage {
   constructor(private dappeteer: Dappeteer) {}
@@ -32,14 +31,17 @@ export class MetamaskPage {
       );
       await unconfirmed.click();
       await this.page.waitForTimeout(1000);
-      await (await this.page.waitForSelector(`[data-testid="page-container-footer-next"]:not([disabled])`)).click()
+      await (
+        await this.page.waitForSelector(
+          `[data-testid="page-container-footer-next"]:not([disabled])`
+        )
+      ).click();
 
       await page.bringToFront();
     } catch (e) {
       console.log('In confirm transaction');
       console.log(e);
     }
-
   }
 
   async acceptSwitch() {

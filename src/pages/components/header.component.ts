@@ -47,7 +47,9 @@ export class HeaderComponent extends BaseAbstract {
   async navigateToAssets(): Promise<void> {
     await waitForTimeout(3000);
     await page.click(Selector.byQaId(this.ASSETS_SELECTOR));
-    await (await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)).click();
+    await (
+      await page.waitForSelector(`${Selector.byQaId(this.ASSETS_SELECTOR)} a`)
+    ).click();
   }
 
   async navigateToGovernance(): Promise<void> {

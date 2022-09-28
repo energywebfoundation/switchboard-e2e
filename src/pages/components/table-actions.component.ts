@@ -6,14 +6,12 @@ export class TableActionsComponent {
   private readonly EDIT_MENU_ACTION = Selector.byQaId('edit');
   private readonly TRANSFER_OWNERSHIP_BUTTON =
     Selector.byQaId('transfer-ownership');
-  private readonly CANCEL_TRANSFER_BUTTON =
-    Selector.byQaId('cancel-transfer');
+  private readonly CANCEL_TRANSFER_BUTTON = Selector.byQaId('cancel-transfer');
   private readonly SHOW_HISTORY = Selector.byQaId('history');
 
   async openEditAction(id: number): Promise<void> {
     try {
       await this.openAction(id, this.EDIT_MENU_ACTION);
-
     } catch (e) {
       console.log(e);
     }

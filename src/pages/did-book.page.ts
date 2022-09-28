@@ -3,7 +3,7 @@ import { fillInput } from '../utils/fill-input';
 import { BaseAbstract } from './base.abstract';
 import { waitForTimeout } from '../utils/wait-for-timeout';
 
-export class DidBookPage extends BaseAbstract{
+export class DidBookPage extends BaseAbstract {
   private readonly INPUT_LABEL = 'label';
   private readonly INPUT_DID = 'did';
   private readonly ADD_BUTTON = 'add';

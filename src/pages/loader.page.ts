@@ -4,7 +4,7 @@ import { LoaderSelectorEnum } from '../models';
 export class LoaderPage {
   public async waitForLoaderDisappear() {
     try {
-      if (!await page.$(Selector.byQaId(LoaderSelectorEnum.Loader))) {
+      if (!(await page.$(Selector.byQaId(LoaderSelectorEnum.Loader)))) {
         console.log('invisible');
       }
       if (await page.$(Selector.byQaId(LoaderSelectorEnum.Loader))) {
@@ -15,9 +15,8 @@ export class LoaderPage {
         });
       }
     } catch (e) {
-      await page.screenshot({type: 'png'});
+      await page.screenshot({ type: 'png' });
     }
-
   }
 
   async waitForPreloaderDisappear() {

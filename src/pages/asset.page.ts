@@ -1,6 +1,5 @@
 import { BaseAbstract } from './base.abstract';
 import { HeaderComponent } from './components/header.component';
-import { LoaderPage } from './loader.page';
 import { Selector } from '../utils/selector';
 import { TableActionsComponent } from './components/table-actions.component';
 import { EditPage } from './asset/edit.page';
@@ -68,7 +67,6 @@ export class AssetPage extends BaseAbstract {
     if (element.emittedDate) {
       await this.ownershipHistory.checkEmittedDate(id, element.emittedDate);
     }
-
   }
 
   async cancelTransferAction(id: number = 0): Promise<void> {

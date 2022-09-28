@@ -33,8 +33,7 @@ export class Login {
 
     if (!hasData) {
       await this.prepareForReinitialization();
-      await page.reload({waitUntil: ['load', 'domcontentloaded']})
-
+      await page.reload({ waitUntil: ['load', 'domcontentloaded'] });
 
       console.log('didnt had ', await this.hasData());
       await this.metamaskPage.page.bringToFront();

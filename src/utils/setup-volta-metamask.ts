@@ -1,6 +1,5 @@
 import { getMetamaskWindow, setupMetamask } from '@chainsafe/dappeteer';
 import { clickOnButton } from '@chainsafe/dappeteer/dist/helpers';
-import { waitForTimeout } from './wait-for-timeout';
 
 export const setupVoltaMetamask = async () => {
   const dappeteer = await setupMetamask(browser, {
