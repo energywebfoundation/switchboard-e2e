@@ -3,6 +3,7 @@ import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { Selector } from '../utils/selector';
 import { MetamaskSelector } from '../models';
+import { waitForTimeout } from '../utils/wait-for-timeout';
 
 export class MetamaskPage {
   constructor(private dappeteer: Dappeteer) {}
@@ -114,9 +115,12 @@ export class MetamaskPage {
 
   async sign() {
     await this.page.bringToFront();
-    await this.page.waitForTimeout(2000);
+    await this.page.reload();
+    await waitForTimeout(2000);
+    console.log('will click home__activity-tab in sign method')
     const button2 = await Select.byTestData(this.page, 'home__activity-tab');
     await button2.click();
+    console.log('clicked home__activity-tab in sign method')
 
     const unconfirmed = await this.page.waitForSelector(
       '.transaction-list-item--unconfirmed'
