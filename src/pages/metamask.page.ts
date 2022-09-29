@@ -59,7 +59,7 @@ export class MetamaskPage {
 
   async login() {
 
-
+    await this.page.waitForTimeout(5000);
     await this.approve();
     //
     // const button2 = await Select.byTestData(this.page, 'home__activity-tab');
@@ -69,6 +69,7 @@ export class MetamaskPage {
     // );
     // await unconfirmed.click();
     // await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(5000);
     await this.dappeteer.sign();
     // await this.sign();
   }
