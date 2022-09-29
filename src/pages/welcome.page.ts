@@ -21,7 +21,8 @@ export class WelcomePage extends BaseAbstract {
   }
 
   async selectMetamask(): Promise<void> {
-    await page.click(Selector.byQaId(WelcomeSelector.MetamaskButton));
+    await page.waitForSelector(Selector.byQaId(WelcomeSelector.MetamaskButton), {visible: true})
+    await (await page.waitForSelector(Selector.byQaId(WelcomeSelector.MetamaskButton))).click();
   }
 
   async rejectMetamaskLogin() {
@@ -56,5 +57,11 @@ export class WelcomePage extends BaseAbstract {
     return await page.waitForSelector(
       Selector.byQaId(WelcomeSelector.WrongNetwork)
     );
+  }
+
+  async shouldShowError() {
+    expect(
+      await page.waitForSelector('.toast-container .toast-error')
+    ).toBeTruthy();
   }
 }

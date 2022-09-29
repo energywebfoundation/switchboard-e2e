@@ -25,8 +25,8 @@ jobs:
       - name: 'Install dependencies'
         run: npm install
 
-#      - name: 'Running Login tests'
-#        run: xvfb-run --auto-servernum npm run test:login
+      - name: 'Running Login tests'
+        run: xvfb-run --auto-servernum npm run test:login
 
       - name: 'Running Other tests'
         run: xvfb-run --auto-servernum npm run test:without-login

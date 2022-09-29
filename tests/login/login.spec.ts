@@ -4,7 +4,6 @@ import { WelcomePage } from '../../src/pages/welcome.page';
 import { DashboardPage } from '../../src/pages/dashboard.page';
 import { Login, Router } from '../../src/utils/';
 import { PopupPage } from '../../src/pages/popup.page';
-import { RouterPathEnum } from '../../src/models/router-path.enum';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;
@@ -22,6 +21,7 @@ describe('login tests', () => {
     dashboardPage = new DashboardPage();
     popupPage = new PopupPage();
     await welcomePage.waitForPreloaderDisappear();
+    await welcomePage.waitForLoaderDisappear();
   });
 
   afterEach(async () => {
@@ -29,38 +29,21 @@ describe('login tests', () => {
   });
 
   it('should display snackbar when rejecting metamask', async () => {
+    await page.waitForTimeout(2000);
     await welcomePage.rejectMetamaskLogin();
 
-    expect(
-      await page.waitForSelector('.toast-container .toast-error')
-    ).toBeTruthy();
+    await welcomePage.shouldShowError();
   });
 
   it('should successfully login and after logout navigate to welcome page', async () => {
+    await page.waitForTimeout(2000);
     await welcomePage.loginWithMetamask();
     await page.bringToFront();
 
-    await dashboardPage.isVisible();
-    await page.waitForTimeout(3000);
+    await expect(dashboardPage.isVisible()).toBeTruthy();
     await dashboardPage.logout();
 
     expect(await welcomePage.isWelcomePage()).toBeTruthy();
-  });
-
-  xit('should display dialog information when switching network', () => {});
-
-  xit('should display dialog information when switching account', () => {});
-
-  it('should navigate to dashboard page, when refreshing page after successful login', async () => {
-    await welcomePage.loginWithMetamask();
-
-    await page.bringToFront();
-    await dashboardPage.isVisible();
-    await page.reload();
-    await dashboardPage.isVisible();
-    await page.evaluate(() => {
-      localStorage.clear();
-    });
   });
 
   it('should display network to volta when ethereum network is enabled', async () => {
@@ -68,15 +51,5 @@ describe('login tests', () => {
 
     expect(await welcomePage.isWrongNetworkDisplayed()).toBeTruthy();
     await welcomePage.switchToVolta();
-  });
-
-  xit('should display popup when localstorage contains data, but user reject metamask', async () => {
-    await welcomePage.accountNotConnectedToMetamask();
-
-    await Router.navigateTo(RouterPathEnum.Dashboard);
-
-    await dashboardPage.rejectMetamaskWhenReinitializing();
-
-    await popupPage.isDisplayed();
   });
 });
