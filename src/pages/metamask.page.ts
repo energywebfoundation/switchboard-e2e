@@ -61,14 +61,14 @@ export class MetamaskPage {
 
 
     await this.approve();
-
-    const button2 = await Select.byTestData(this.page, 'home__activity-tab');
-    await button2.click();
-    const unconfirmed = await this.page.waitForSelector(
-      '.transaction-list-item--unconfirmed'
-    );
-    await unconfirmed.click();
-    await this.page.waitForTimeout(1000);
+    //
+    // const button2 = await Select.byTestData(this.page, 'home__activity-tab');
+    // await button2.click();
+    // const unconfirmed = await this.page.waitForSelector(
+    //   '.transaction-list-item--unconfirmed'
+    // );
+    // await unconfirmed.click();
+    // await this.page.waitForTimeout(1000);
     await this.dappeteer.sign();
     // await this.sign();
   }
