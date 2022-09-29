@@ -8,7 +8,7 @@ export class DashboardPage extends BaseAbstract {
   dashboard: DashboardComponent = new DashboardComponent();
 
   async isVisible() {
-    expect(await this.dashboard.getGovernanceCard()).toBeTruthy();
+    return await this.dashboard.getGovernanceCard();
   }
 
   async rejectMetamaskWhenReinitializing() {

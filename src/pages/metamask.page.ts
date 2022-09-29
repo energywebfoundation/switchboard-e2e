@@ -44,10 +44,6 @@ export class MetamaskPage {
     }
   }
 
-  async acceptSwitch() {
-    await this.dappeteer.page.bringToFront();
-  }
-
   async approve(): Promise<void> {
     await this.page.bringToFront();
 
@@ -62,13 +58,19 @@ export class MetamaskPage {
   }
 
   async login() {
-    await this.closePopOver();
-    await this.page.waitForTimeout(100);
-    if (await this.page.$('button.button.btn-primary')) {
-      await this.approve();
-    }
 
-    await this.sign();
+
+    await this.approve();
+
+    const button2 = await Select.byTestData(this.page, 'home__activity-tab');
+    await button2.click();
+    const unconfirmed = await this.page.waitForSelector(
+      '.transaction-list-item--unconfirmed'
+    );
+    await unconfirmed.click();
+    await this.page.waitForTimeout(1000);
+    await this.dappeteer.sign();
+    // await this.sign();
   }
 
   async bringToFrontAndReload(): Promise<void> {
@@ -118,10 +120,8 @@ export class MetamaskPage {
   async sign() {
     await this.page.bringToFront();
     await this.page.reload();
-    await this.page.waitForTimeout(2000);
 
     await this.dappeteer.sign();
-
     await page.bringToFront();
   }
 }
