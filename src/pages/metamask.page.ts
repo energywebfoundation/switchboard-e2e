@@ -3,6 +3,7 @@ import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
 import { Selector } from '../utils/selector';
 import { MetamaskSelector } from '../models';
+import { getElementByContent } from '@chainsafe/dappeteer/dist/helpers';
 
 export class MetamaskPage {
   constructor(private dappeteer: Dappeteer) {}
@@ -21,11 +22,18 @@ export class MetamaskPage {
     await page.reload();
   }
 
-  async confirmTransaction() {
+  async confirm() {
+    await this.dappeteer.confirmTransaction();
+  }
+
+  async confirmTransaction(checkFor?: { textContent: string, type: string }) {
     try {
       await this.page.bringToFront();
       const button2 = await Select.byTestData(this.page, 'home__activity-tab');
       await button2.click();
+      if (checkFor && checkFor.textContent && checkFor.type) {
+        await getElementByContent(this.page, checkFor.textContent, checkFor.type);
+      }
       const unconfirmed = await this.page.waitForSelector(
         '.transaction-list-item--unconfirmed'
       );

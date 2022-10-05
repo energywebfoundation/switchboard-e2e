@@ -2,6 +2,7 @@ import { Selector } from '../utils/selector';
 import { fillInput } from '../utils/fill-input';
 import { BaseAbstract } from './base.abstract';
 import { waitForTimeout } from '../utils/wait-for-timeout';
+import { Dialog } from './dialog/dialog';
 
 export class DidBookPage extends BaseAbstract {
   private readonly INPUT_LABEL = 'label';
@@ -11,6 +12,7 @@ export class DidBookPage extends BaseAbstract {
   private readonly INPUT_FILTER_DID = 'filter-did';
   private readonly HOST = 'app-did-book';
   private readonly REMOVE_RECORD = 'remove-';
+  private dialog = new Dialog();
 
   /**
    * This property is generated depending on actual local timestamp. It's the easiest way to make it unique.
@@ -75,7 +77,7 @@ export class DidBookPage extends BaseAbstract {
   async close() {
     await this.snackbar.closeSnackbar();
     await waitForTimeout(2000);
-    await (await page.waitForSelector('h4.mat-dialog-title button')).click();
-    await waitForTimeout(15000);
+    await this.dialog.close();
+    await waitForTimeout(1000);
   }
 }
