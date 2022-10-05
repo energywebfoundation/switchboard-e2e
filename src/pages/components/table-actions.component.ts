@@ -8,6 +8,8 @@ export class TableActionsComponent {
     Selector.byQaId('transfer-ownership');
   private readonly CANCEL_TRANSFER_BUTTON = Selector.byQaId('cancel-transfer');
   private readonly SHOW_HISTORY = Selector.byQaId('history');
+  private readonly CREATE_ROLE_BUTTON = Selector.byQaId('create-role');
+  private readonly OPEN_DETAILS_BUTTON = Selector.byQaId('preview');
 
   async openEditAction(id: number): Promise<void> {
     try {
@@ -29,7 +31,16 @@ export class TableActionsComponent {
     await this.openAction(id, this.SHOW_HISTORY);
   }
 
+  async createRole(id: number): Promise<void> {
+    await this.openAction(id, this.CREATE_ROLE_BUTTON);
+  }
+
+  async openDetails(id: number): Promise<void> {
+    await this.openAction(id, this.OPEN_DETAILS_BUTTON)
+  }
+
   private async openAction(id: number, selector: string) {
+    await waitForTimeout(1000);
     await (await page.waitForSelector(this.ACTIONS_MENU(id))).click();
     await waitForTimeout(1000);
     await (await page.waitForSelector(selector)).click();

@@ -1,11 +1,12 @@
 import { BaseAbstract } from './base.abstract';
-import { HeaderComponent } from './components/header.component';
 import { Selector } from '../utils/selector';
 import { TableActionsComponent } from './components/table-actions.component';
 import { EditPage } from './asset/edit.page';
 import { TransferOwnershipPage } from './transfer-ownership.page';
 import { HistoryPage } from './asset/history.page';
 import { waitForTimeout } from '../utils/wait-for-timeout';
+import { HeaderComponent } from './components/header.component';
+import { Dialog } from './dialog/dialog';
 
 export class AssetPage extends BaseAbstract {
   private readonly REGISTER_ASSET_BUTTON = Selector.byQaId('register-asset');
@@ -19,6 +20,7 @@ export class AssetPage extends BaseAbstract {
   private transferOwnership: TransferOwnershipPage =
     new TransferOwnershipPage();
   private ownershipHistory: HistoryPage = new HistoryPage();
+  private dialog = new Dialog();
 
   async isMyAssetPageVisible() {
     expect(
@@ -96,5 +98,9 @@ export class AssetPage extends BaseAbstract {
     await this.transferOwnership.send();
     await this.transferOwnership.confirmPopup();
     await this.confirmMetamaskTransaction();
+  }
+
+  async closeDialog() {
+    await this.dialog.close();
   }
 }

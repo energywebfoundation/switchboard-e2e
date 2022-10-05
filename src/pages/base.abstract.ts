@@ -2,6 +2,7 @@ import { MetamaskPage } from './metamask.page';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { SnackbarComponent } from './components/snackbar.component';
 import { LoaderPage } from './loader.page';
+import { HeaderComponent } from './components/header.component';
 
 export abstract class BaseAbstract {
   metamaskPage: MetamaskPage;

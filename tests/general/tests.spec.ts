@@ -7,6 +7,7 @@ import { generateRandomDid } from '../../src/utils/generate-random-did';
 import { CONFIG } from '../../src/config';
 import { AssetPage } from '../../src/pages/asset.page';
 import { waitForTimeout } from '../../src/utils/wait-for-timeout';
+import { GovernancePage } from '../../src/pages/governance/governance.page';
 
 describe('E2E tests', () => {
   let metamaskPage: MetamaskPage;
@@ -14,9 +15,11 @@ describe('E2E tests', () => {
   let didBookPage: DidBookPage;
   let login: Login;
   let assetsPage: AssetPage;
+  let governancePage: GovernancePage;
 
   beforeAll(async () => {
     (global as any)['page'] = await browser.newPage();
+    await page.setViewport({width: 1200, height: 800})
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
     login = await new Login(metamaskPage);
     await login.reinitializeIfNeeded();
@@ -61,11 +64,6 @@ describe('E2E tests', () => {
     beforeAll(async () => {
       assetsPage = new AssetPage();
       await assetsPage.goToAssets();
-      // await Router.navigateTo(RouterPathEnum.Assets);
-      // await page.waitForNavigation({
-      //   waitUntil: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'],
-      // });
-      await assetsPage.waitForLoaderDisappear();
     });
     it('should register asset', async () => {
       await assetsPage.registerAsset();
@@ -95,8 +93,30 @@ describe('E2E tests', () => {
       await assetsPage.checkHistoryElement(0, { type: 'ASSET_CREATED' });
       await assetsPage.checkHistoryElement(1, { type: 'ASSET_OFFERED' });
       await assetsPage.checkHistoryElement(2, { type: 'ASSET_OFFER_CANCELED' });
+      await waitForTimeout(1000);
+      await assetsPage.closeDialog();
     });
   });
+
+  describe('Governance', () => {
+    beforeAll(async () => {
+      governancePage = new GovernancePage();
+      await governancePage.goTo();
+    });
+
+    it('should check details of organization', async () => {
+      await governancePage.openDetails();
+      await governancePage.checkDetails({namespace: 'suborg.dawidgil.iam.ewc', name: 'Org', type: 'Organization Namespace'});
+      await waitForTimeout(500);
+      await governancePage.closeDialog();
+    })
+
+    it('should create role', async () => {
+      await governancePage.openCreateRole();
+      await governancePage.createRole({roleName: new Date(Date.now()).getTime().toString(), issuerRole: 'alldata.roles.gilsuborg.dawidgil.iam.ewc'});
+      await waitForTimeout(25000);
+    })
+  })
 
   afterAll(async () => {
     await page.close();
