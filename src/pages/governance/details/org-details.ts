@@ -1,5 +1,4 @@
 import { Selector } from '../../../utils/selector';
-import { DetailsBaseAbstract } from './details-base.abstract';
 import { Comparator } from '../../../utils';
 
 export class OrgDetails {

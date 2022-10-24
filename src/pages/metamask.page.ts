@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer';
 import { Dappeteer } from '@chainsafe/dappeteer';
 import { Select } from '../select';
-import { Selector } from '../utils/selector';
+import { Selector } from '../utils';
 import { MetamaskSelector } from '../models';
 import { getElementByContent } from '@chainsafe/dappeteer/dist/helpers';
 

@@ -1,5 +1,4 @@
-import { Selector } from '../utils/selector';
-import { fillInput } from '../utils/fill-input';
+import { fillInput, Selector } from '../../utils';
 
 export class TransferOwnershipPage {
   private readonly SUBMIT_TRANSFER_BUTTON = Selector.byQaId('next');

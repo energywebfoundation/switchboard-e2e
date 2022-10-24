@@ -1,9 +1,6 @@
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
-import { MetamaskPage } from '../../src/pages/metamask.page';
-import { WelcomePage } from '../../src/pages/welcome.page';
-import { DashboardPage } from '../../src/pages/dashboard.page';
+import { DashboardPage, MetamaskPage, PopupPage, WelcomePage } from '../../src/pages';
 import { Login, Router } from '../../src/utils/';
-import { PopupPage } from '../../src/pages/popup.page';
 
 describe('login tests', () => {
   let metamaskPage: MetamaskPage;

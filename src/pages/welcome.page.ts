@@ -1,5 +1,5 @@
 import { BaseAbstract } from './base.abstract';
-import { Selector } from '../utils/selector';
+import { Selector } from '../utils';
 import { WelcomeSelector } from '../models';
 
 export class WelcomePage extends BaseAbstract {

@@ -1,5 +1,4 @@
-import { Selector } from '../../utils/selector';
-import { waitForTimeout } from '../../utils/wait-for-timeout';
+import { Selector, waitForTimeout } from '../../utils';
 
 export class TableActionsComponent {
   private readonly ACTIONS_MENU = (id: number) => Selector.byQaId('menu-' + id);

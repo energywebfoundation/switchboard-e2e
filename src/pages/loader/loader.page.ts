@@ -1,5 +1,5 @@
-import { Selector } from '../utils/selector';
-import { LoaderSelectorEnum } from '../models';
+import { Selector } from '../../utils';
+import { LoaderSelectorEnum } from '../../models';
 
 export class LoaderPage {
   public async waitForLoaderDisappear() {

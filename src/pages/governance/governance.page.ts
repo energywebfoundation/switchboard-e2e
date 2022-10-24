@@ -6,7 +6,6 @@ import { OrgDetails } from './details/org-details';
 import { Dialog } from '../dialog/dialog';
 import { Field } from './role-creation/fields';
 import { Selector, waitForTimeout } from '../../utils';
-import { getElementByContent } from '@chainsafe/dappeteer/dist/helpers';
 
 interface RoleData {
   roleName: string;

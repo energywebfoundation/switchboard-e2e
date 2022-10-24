@@ -1,13 +1,8 @@
-import { MetamaskPage } from '../../src/pages/metamask.page';
-import { DashboardPage } from '../../src/pages/dashboard.page';
+import { AssetPage, DashboardPage, DidBookPage, GovernancePage, MetamaskPage } from '../../src/pages';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
-import { Login } from '../../src/utils';
-import { DidBookPage } from '../../src/pages/did-book.page';
+import { Login, waitForTimeout } from '../../src/utils';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
 import { CONFIG } from '../../src/config';
-import { AssetPage } from '../../src/pages/asset.page';
-import { waitForTimeout } from '../../src/utils/wait-for-timeout';
-import { GovernancePage } from '../../src/pages/governance/governance.page';
 
 describe('E2E tests', () => {
   let metamaskPage: MetamaskPage;
@@ -114,7 +109,6 @@ describe('E2E tests', () => {
     it('should create role', async () => {
       await governancePage.openCreateRole();
       await governancePage.createRole({roleName: new Date(Date.now()).getTime().toString(), issuerRole: 'alldata.roles.gilsuborg.dawidgil.iam.ewc'});
-      await waitForTimeout(25000);
     })
   })
 

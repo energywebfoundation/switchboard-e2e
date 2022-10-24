@@ -1,12 +1,9 @@
-import { BaseAbstract } from './base.abstract';
-import { Selector } from '../utils/selector';
-import { TableActionsComponent } from './components/table-actions.component';
-import { EditPage } from './asset/edit.page';
-import { TransferOwnershipPage } from './transfer-ownership.page';
-import { HistoryPage } from './asset/history.page';
-import { waitForTimeout } from '../utils/wait-for-timeout';
-import { HeaderComponent } from './components/header.component';
-import { Dialog } from './dialog/dialog';
+import { BaseAbstract } from '../base.abstract';
+import { Selector, waitForTimeout } from '../../utils';
+import { HeaderComponent, TableActionsComponent } from '../components';
+import { EditPage, HistoryPage } from '../asset';
+import { TransferOwnershipPage } from '../transfer-ownership';
+import { Dialog } from '../dialog';
 
 export class AssetPage extends BaseAbstract {
   private readonly REGISTER_ASSET_BUTTON = Selector.byQaId('register-asset');

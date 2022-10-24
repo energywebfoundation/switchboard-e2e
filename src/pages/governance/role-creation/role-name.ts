@@ -1,6 +1,4 @@
-import { fillInput } from '../../../utils';
-import { Selector } from '../../../utils';
-import { waitForTimeout } from '../../../utils';
+import { fillInput, Selector, waitForTimeout } from '../../../utils';
 
 export class RoleName {
   private readonly ROLE_NAME_INPUT = Selector.byQaId('role-name');

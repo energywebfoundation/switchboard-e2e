@@ -1,8 +1,7 @@
-import { BaseAbstract } from '../base.abstract';
 import { ElementHandle } from 'puppeteer';
-import { Selector } from '../../utils/selector';
+import { Selector } from '../../utils';
 
-export class DashboardComponent extends BaseAbstract {
+export class DashboardComponent {
   private readonly ENROLMENT_SELECTOR = 'Enrolments';
   private readonly ASSETS_SELECTOR = 'Assets';
   private readonly GOVERNANCE_SELECTOR = 'Governance';

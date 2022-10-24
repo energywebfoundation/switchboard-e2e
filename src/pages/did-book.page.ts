@@ -1,8 +1,6 @@
-import { Selector } from '../utils/selector';
-import { fillInput } from '../utils/fill-input';
+import { fillInput, Selector, waitForTimeout } from '../utils';
 import { BaseAbstract } from './base.abstract';
-import { waitForTimeout } from '../utils/wait-for-timeout';
-import { Dialog } from './dialog/dialog';
+import { Dialog } from './dialog';
 
 export class DidBookPage extends BaseAbstract {
   private readonly INPUT_LABEL = 'label';

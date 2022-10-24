@@ -1,8 +1,6 @@
-import { BaseAbstract } from '../base.abstract';
-import { Selector } from '../../utils/selector';
-import { waitForTimeout } from '../../utils/wait-for-timeout';
+import { Selector, waitForTimeout } from '../../utils';
 
-export class HeaderComponent extends BaseAbstract {
+export class HeaderComponent {
   private readonly ENROLMENT_SELECTOR = Selector.byQaId('header-enrolment');
   private readonly ASSETS_SELECTOR = Selector.byQaId('header-assets');
   private readonly GOVERNANCE_SELECTOR = Selector.byQaId('header-governance');

@@ -1,7 +1,7 @@
 import { RouterPathEnum } from '../models/router-path.enum';
 import { Router } from './router';
-import { MetamaskPage } from '../pages/metamask.page';
-import { LoaderPage } from '../pages/loader.page';
+import { MetamaskPage } from '../pages';
+import { LoaderPage } from '../pages';
 import { waitForTimeout } from './wait-for-timeout';
 
 export class Login {

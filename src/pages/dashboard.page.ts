@@ -1,7 +1,6 @@
-import { HeaderComponent } from './components/header.component';
-import { DashboardComponent } from './components/dashboard.component';
+import { DashboardComponent, HeaderComponent } from './components';
 import { BaseAbstract } from './base.abstract';
-import { waitForTimeout } from '../utils/wait-for-timeout';
+import { waitForTimeout } from '../utils';
 
 export class DashboardPage extends BaseAbstract {
   header: HeaderComponent = new HeaderComponent();
