@@ -97,9 +97,11 @@ describe('E2E tests', () => {
     beforeAll(async () => {
       governancePage = new GovernancePage();
       await governancePage.goTo();
+      await governancePage.waitForLoaderDisappear();
     });
 
     it('should check details of organization', async () => {
+      await waitForTimeout(1000);
       await governancePage.openDetails();
       await governancePage.checkDetails({namespace: 'suborg.dawidgil.iam.ewc', name: 'Org', type: 'Organization Namespace'});
       await waitForTimeout(500);
