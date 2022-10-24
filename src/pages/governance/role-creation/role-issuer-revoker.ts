@@ -9,8 +9,6 @@ export class RoleIssuerRevoker {
   private readonly ADD_DID_BUTTON = Selector.byQaId('add-did');
 
   async pickType(type: 'DID' | 'ROLE') {
-
-
     const dropdown = await page.waitForSelector(this.DROPDOWN);
     await dropdown.click();
 

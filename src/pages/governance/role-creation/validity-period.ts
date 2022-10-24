@@ -1,6 +1,6 @@
 import { fillInput, Selector } from '../../../utils';
 
-export interface Period{
+export interface Period {
   years?: number;
   days?: number;
   hours?: number;

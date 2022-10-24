@@ -35,7 +35,7 @@ export class TableActionsComponent {
   }
 
   async openDetails(id: number): Promise<void> {
-    await this.openAction(id, this.OPEN_DETAILS_BUTTON)
+    await this.openAction(id, this.OPEN_DETAILS_BUTTON);
   }
 
   private async openAction(id: number, selector: string) {

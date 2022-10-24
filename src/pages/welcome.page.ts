@@ -21,8 +21,15 @@ export class WelcomePage extends BaseAbstract {
   }
 
   async selectMetamask(): Promise<void> {
-    await page.waitForSelector(Selector.byQaId(WelcomeSelector.MetamaskButton), {visible: true})
-    await (await page.waitForSelector(Selector.byQaId(WelcomeSelector.MetamaskButton))).click();
+    await page.waitForSelector(
+      Selector.byQaId(WelcomeSelector.MetamaskButton),
+      { visible: true }
+    );
+    await (
+      await page.waitForSelector(
+        Selector.byQaId(WelcomeSelector.MetamaskButton)
+      )
+    ).click();
   }
 
   async rejectMetamaskLogin() {

@@ -21,7 +21,9 @@ export class RoleCreationPage {
   }
 
   async next() {
-    await (await page.waitForSelector(this.NEXT_BUTTON, {visible: true})).click();
+    await (
+      await page.waitForSelector(this.NEXT_BUTTON, { visible: true })
+    ).click();
     await waitForTimeout(1000);
   }
 

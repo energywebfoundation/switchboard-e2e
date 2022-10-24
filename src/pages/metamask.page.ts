@@ -26,13 +26,17 @@ export class MetamaskPage {
     await this.dappeteer.confirmTransaction();
   }
 
-  async confirmTransaction(checkFor?: { textContent: string, type: string }) {
+  async confirmTransaction(checkFor?: { textContent: string; type: string }) {
     try {
       await this.page.bringToFront();
       const button2 = await Select.byTestData(this.page, 'home__activity-tab');
       await button2.click();
       if (checkFor && checkFor.textContent && checkFor.type) {
-        await getElementByContent(this.page, checkFor.textContent, checkFor.type);
+        await getElementByContent(
+          this.page,
+          checkFor.textContent,
+          checkFor.type
+        );
       }
       const unconfirmed = await this.page.waitForSelector(
         '.transaction-list-item--unconfirmed'
@@ -66,7 +70,6 @@ export class MetamaskPage {
   }
 
   async login() {
-
     await this.page.waitForTimeout(5000);
     await this.approve();
 

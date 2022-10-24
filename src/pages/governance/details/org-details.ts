@@ -19,6 +19,10 @@ export class OrgDetails {
   }
 
   protected async compare(toCompare: string, selector: string) {
-    await Comparator.compare(toCompare, selector, 'screenshots/errors/comparing.png')
+    await Comparator.compare(
+      toCompare,
+      selector,
+      'screenshots/errors/comparing.png'
+    );
   }
 }

@@ -4,7 +4,6 @@ export * from './dialog';
 export * from './governance';
 export * from './loader';
 
-
 export * from './did-book.page';
 export * from './dashboard.page';
 export * from './metamask.page';
