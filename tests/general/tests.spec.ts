@@ -1,4 +1,10 @@
-import { AssetPage, DashboardPage, DidBookPage, GovernancePage, MetamaskPage } from '../../src/pages';
+import {
+  AssetPage,
+  DashboardPage,
+  DidBookPage,
+  GovernancePage,
+  MetamaskPage,
+} from '../../src/pages';
 import { getMetamaskWindow } from '@chainsafe/dappeteer';
 import { Login, waitForTimeout } from '../../src/utils';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
@@ -14,7 +20,7 @@ describe('E2E tests', () => {
 
   beforeAll(async () => {
     (global as any)['page'] = await browser.newPage();
-    await page.setViewport({width: 1200, height: 800})
+    await page.setViewport({ width: 1200, height: 800 });
     metamaskPage = new MetamaskPage(await getMetamaskWindow(browser));
     login = await new Login(metamaskPage);
     await login.reinitializeIfNeeded();
@@ -103,16 +109,24 @@ describe('E2E tests', () => {
     it('should check details of organization', async () => {
       await waitForTimeout(1000);
       await governancePage.openDetails();
-      await governancePage.checkDetails({namespace: 'suborg.dawidgil.iam.ewc', name: 'Org', type: 'Organization Namespace'});
+      await governancePage.checkDetails({
+        namespace: 'suborg.dawidgil.iam.ewc',
+        name: 'Org',
+        type: 'Organization Namespace',
+      });
       await waitForTimeout(500);
       await governancePage.closeDialog();
-    })
+    });
 
     it('should create role', async () => {
       await governancePage.openCreateRole();
-      await governancePage.createRole({roleName: new Date(Date.now()).getTime().toString(), issuerRole: 'alldata.roles.gilsuborg.dawidgil.iam.ewc'});
-    })
-  })
+      await governancePage.createRole({
+        roleName: new Date(Date.now()).getTime().toString(),
+        issuerRole: 'alldata.roles.gilsuborg.dawidgil.iam.ewc',
+        validityPeriod: { years: 1, days: 12, hours: 3 },
+      });
+    });
+  });
 
   afterAll(async () => {
     await page.close();
