@@ -10,6 +10,9 @@ import { Login, waitForTimeout } from '../../src/utils';
 import { generateRandomDid } from '../../src/utils/generate-random-did';
 import { CONFIG } from '../../src/config';
 
+/**
+ * Tests for general functions.
+ */
 describe('E2E tests', () => {
   let metamaskPage: MetamaskPage;
   let dashboardPage: DashboardPage;
