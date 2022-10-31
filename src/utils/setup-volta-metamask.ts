@@ -3,8 +3,8 @@ import { clickOnButton } from '@chainsafe/dappeteer/dist/helpers';
 
 export const setupVoltaMetamask = async () => {
   const dappeteer = await setupMetamask(browser, {
-    seed: 'allow special exercise item pretty cliff fitness foam acquire about truth bone',
-    password: '123456789',
+    seed: process.env.SEED,
+    password: process.env.PASSWORD,
   });
   try {
     await dappeteer.addNetwork({
