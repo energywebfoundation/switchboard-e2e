@@ -82,11 +82,13 @@ describe('E2E tests', () => {
     it('should transfer created asset to different DID', async () => {
       await assetsPage.openTransferAction();
       await assetsPage.transferOwnershipTo(CONFIG.publicKeyForTransfer);
+      await assetsPage.closeDialog();
     });
 
     it('should cancel ownership transfer', async () => {
       await assetsPage.cancelTransferAction();
       await assetsPage.confirmCancel();
+      await assetsPage.closeDialog();
     });
 
     it('should check asset history', async () => {

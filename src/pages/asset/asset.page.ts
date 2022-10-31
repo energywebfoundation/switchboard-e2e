@@ -52,6 +52,7 @@ export class AssetPage extends BaseAbstract {
 
   async openTransferAction(id: number = 0): Promise<void> {
     await this.tableActions.openTransferAction(id);
+    expect(await page.waitForSelector('app-transfer-ownership')).toBeTruthy();
   }
 
   async openHistory(id: number = 0): Promise<void> {
