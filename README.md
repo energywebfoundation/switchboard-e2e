@@ -20,6 +20,10 @@ npm install
 
 ## Tests
 
+Before you run tests, you need to provide `seed` and `password` for metamask in `.env` file.
+Account should contain organization. Test about organization details might fail as different account will have different
+organization.
+
 To run tests, call one of below commands
 
 Run
