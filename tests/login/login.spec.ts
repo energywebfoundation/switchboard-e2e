@@ -37,6 +37,9 @@ describe('login tests', () => {
     await welcomePage.shouldShowError();
   });
 
+  // #SW-GE-001 - configuration
+  // #SW-GE-003 - login with metamask
+  // #SW-GE-012 - logout
   it('should successfully login and after logout navigate to welcome page', async () => {
     await page.waitForTimeout(2000);
     await welcomePage.loginWithMetamask();
@@ -48,6 +51,7 @@ describe('login tests', () => {
     expect(await welcomePage.isWelcomePage()).toBeTruthy();
   });
 
+  // #SW-GE-002
   it('should display network to volta when ethereum network is enabled', async () => {
     await welcomePage.openWithEthereum();
 
