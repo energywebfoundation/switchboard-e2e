@@ -37,7 +37,8 @@ npm run test:without-login
 To run tests for checking Switchboard-dapp functionality on dev environment.
 
 Tests are split, because it made them more stable.
-Note: tests are click sensitive and will not execute if the Testing Chromium browser goes out of focus
+
+*Note*: tests are click sensitive and will not execute if the Testing Chromium browser goes out of focus
 
 
 
