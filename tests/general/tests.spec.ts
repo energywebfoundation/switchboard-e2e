@@ -35,7 +35,9 @@ describe('E2E tests', () => {
 
       didBookPage = new DidBookPage();
     });
-    it('should open DID Book, add new record and find it on the list and remove', async () => {
+
+    // #SW-GE-007
+    it('should open DID Book, add new record and find it on the list', async () => {
       await dashboardPage.header.openDIDBook();
 
       await didBookPage.waitForLoad();
@@ -48,6 +50,7 @@ describe('E2E tests', () => {
       await dashboardPage.closeSnackbar();
     });
 
+    // #SW-GE-009
     it('should remove record from list', async () => {
       await waitForTimeout(3000);
       await didBookPage.findDID();
@@ -69,10 +72,12 @@ describe('E2E tests', () => {
       assetsPage = new AssetPage();
       await assetsPage.goToAssets();
     });
+    // #SW-AS-001
     it('should register asset', async () => {
       await assetsPage.registerAsset();
     });
 
+    // #SW-AS-006
     it('should change asset name', async () => {
       await assetsPage.openEditAction();
 
@@ -82,18 +87,21 @@ describe('E2E tests', () => {
       });
     });
 
+    // #SW-AS-004
     it('should transfer created asset to different DID', async () => {
       await assetsPage.openTransferAction();
       await assetsPage.transferOwnershipTo(CONFIG.publicKeyForTransfer);
       await assetsPage.closeDialog();
     });
 
+    //  #SW-AS-005
     it('should cancel ownership transfer', async () => {
       await assetsPage.cancelTransferAction();
       await assetsPage.confirmCancel();
       await assetsPage.closeDialog();
     });
 
+    // #SW-AS-002
     it('should check asset history', async () => {
       await assetsPage.openHistory();
       await assetsPage.checkHistoryElement(0, { type: 'ASSET_CREATED' });
@@ -111,6 +119,7 @@ describe('E2E tests', () => {
       await governancePage.waitForLoaderDisappear();
     });
 
+    //  #SW-GO-010
     it('should check details of organization', async () => {
       await waitForTimeout(1000);
       await governancePage.openDetails();
@@ -123,6 +132,7 @@ describe('E2E tests', () => {
       await governancePage.closeDialog();
     });
 
+    // #SW-GO-003
     it('should create role', async () => {
       await governancePage.openCreateRole();
       await governancePage.createRole({
